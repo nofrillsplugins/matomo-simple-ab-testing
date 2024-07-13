@@ -1,0 +1,8 @@
+{
+    "SimpleABTesting": {
+        "Tests": "Tests",
+        "ABTesting": "AB Testing",
+        "ABVariant": "ABVariant",
+        "ABVisitor": "ABVisitor"
+    }
+}

@@ -1,0 +1,207 @@
+<style type="text/css">
+.btn-danger { background: darkred !important; }
+.btn { margin-bottom: 3px;}
+</style>
+
+<h1>Simple A/B Testing</h1>
+
+{% if message is not empty %}
+<div class="alert">
+    {{ message }}
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-content">
+        <h2>A/B Testing Experiments</h2>
+        <br>
+        <form method="post" action="{{ actionUrl }}">
+            <input type="hidden" name="redirect_url" value="{{ currentUrl }}">
+            <p>
+                <label for="name">Experiment Name (only alphanumeric characters, no spaces) - always use a new name to configure cookie conflicts</label>
+                <input type="text" name="name" id="name" required>
+            </p>
+            <p>
+                <label for="hypothesis">Hypothesis</label>
+                <input type="text" name="hypothesis" id="hypothesis">
+            </p>
+            <p>
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description">
+            </p>
+            <p>
+                <label for="from_date">From Date - The date starts at 00:00 UTC</label>
+                <input type="date" name="from_date" id="from_date" value="{{ formattedToday }}" required>
+            </p>
+            <p>
+                <label for="to_date">To Date - The date starts ends at 23:59 UTC</label>
+                <input type="date" name="to_date" id="to_date" value="{{ formattedOneMonthLater }}" required>
+            </p>
+            <p>
+                <label for="name">Should display on URLs containing regex</label>
+                <input type="text" name="url_regex" id="url_regex" placeholder="example: blogslug1|blog2slug|blogslug3" required>
+            </p>
+            <p>
+                <label for="css_insert">CSS insert (For variant 1) - the example code removes the h1 tag</label>
+                <textarea name="css_insert" id="css_insert" style="min-height: 200px;" placeholder="Example: .h1 { display: none }"> </textarea>
+            <p>
+                <label for="js_insert">Custom JS (For variant 1) - the example code removes the h1 tag</label>
+                <textarea name="js_insert" id="js_insert" style="min-height: 200px;">let h1 = document.querySelector('h1');
+
+if (h1) {
+    h1.remove();
+}</textarea>
+            </p>
+            <p>
+                <label for="custom_dimension">Use custom dimension id (e.g. 1,2,3,4,5). Make sure that they are <a href="{{ customDimensionsUrl }}">enabled here</a>. And that experiments don't overlap. Else it makes reporting more difficult.</label>
+                <input type="number" name="custom_dimension" id="custom_dimension" required>
+            </p>
+            <p>
+                <input type="submit" value="Add Experiment" class="btn">
+            </p>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>Existing Experiments</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>URL Regex</th>
+                    <th>Inserted CSS</th>
+                    <th>Inserted JS</th>
+                    <th>Custom dimension ID</th>
+                    <th>To report</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for experiment in experiments %}
+                <tr>
+                    <td>{{ experiment.name }}</td>
+                    <td>{{ experiment.from_date }}</td>
+                    <td>{{ experiment.to_date }}</td>
+                    <td>{{ experiment.url_regex }}</td>
+                    <td>{{ experiment.css_insert }}</td>
+                    <td>{{ experiment.js_insert }}</td>
+                    <td>{{ experiment.custom_dimension }}</td>
+                    <td>
+                        {% if experiment.report_url is not empty %}
+                            <a href="{{ experiment.report_url }}" target="_blank" class="btn">View report</a>
+                        {% else %}
+                            No custom dimension set yet
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ deleteUrl }}">
+                            <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Deleted%20experiment%20{{ experiment.name }}">
+                            <input type="hidden" name="id" value="{{ experiment.id }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-content">
+        <h2>View results</h2>
+        <p>You can view the results by getting the custom dimensions reports and adjusting the right dates. You can click on the "view report" buttons above</p>
+        <h2>Statistical significance</h2>
+        <a class="btn" href="https://www.devproblems.com/statistical-significance-calculator/" target="_blank">Calculate statistical significance</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>Code to insert</h2>
+        <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work</p>
+
+        
+        <div id="javascript-text">
+          <div class="copyToClipboardWrapper">
+            <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;/script&gt;</pre>
+            <div class="copyToClipboardPositionDiv">
+              <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
+                <i class="copyToClipboardIcon"></i>
+                <span class="copyToClipboardSpan">Copy</span>
+              </button>
+              <div class="copyToClipboardCopiedDiv" style="display: none;">Copied</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Just to make sure, the CSS + JS codes from your experiments are updated every hour (if the cron is enabled)</h3>
+        <h4>Make sure that you have the Matomo cron enabled to auto-update the code every hour. Else, you have to refresh the cache manually below on each code change</h4>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>Refresh cached JS + CSS inserts for all domains</h2>
+        <p>This might take a while depending on the amount of domains and size of JS + CSS inserts</p>
+        <form method="post" action="{{ refreshUrl }}">
+            <input type="hidden" name="token_auth" value="{{ token_auth }}" >
+            <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Flushed%20cache">
+            <button class="btn" type="submit">Refresh cache</button>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-content">
+        <h2>Want to have more functionality?</h2>
+        <p>View our recommendations for alternative free & paid software.</p>
+        <a class="btn" target="_blank" href="https://www.nofrillsplugins.com" target="_blank">View other A/B testing tools</a>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(button) {
+  const textToCopy = button.closest('.copyToClipboardWrapper').querySelector('.codeblock').innerText;
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      showCopiedMessage(button);
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+      fallbackCopyTextToClipboard(textToCopy, button);
+    });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy, button);
+  }
+}
+
+function fallbackCopyTextToClipboard(text, button) {
+  const tempTextarea = document.createElement('textarea');
+  tempTextarea.value = text;
+  document.body.appendChild(tempTextarea);
+  tempTextarea.select();
+  try {
+    document.execCommand('copy');
+    showCopiedMessage(button);
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+  document.body.removeChild(tempTextarea);
+}
+
+function showCopiedMessage(button) {
+  button.querySelector('.copyToClipboardSpan').style.display = 'none';
+  button.nextElementSibling.style.display = 'inline';
+  setTimeout(() => {
+    button.querySelector('.copyToClipboardSpan').style.display = 'inline';
+    button.nextElementSibling.style.display = 'none';
+  }, 2000);
+}
+</script>

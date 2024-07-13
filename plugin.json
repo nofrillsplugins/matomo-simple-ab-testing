@@ -1,0 +1,29 @@
+{
+    "name": "SimpleABTesting",
+    "description": "A simple A\/B testing plugin",
+    "version": "0.1.0",
+    "theme": false,
+    "require": {
+        "matomo": ">=5.0.0-alpha,<6.0.0-b1"
+    },
+    "authors": [
+        {
+            "name": "No Frills Plugins",
+            "email": "",
+            "homepage": "https://www.nofrillsplugins.com"
+        }
+    ],
+    "support": {
+        "email": "",
+        "issues": "",
+        "forum": "",
+        "irc": "",
+        "wiki": "",
+        "source": "",
+        "docs": "",
+        "rss": ""
+    },
+    "homepage": "",
+    "license": "GPL v3+",
+    "keywords": []
+}
