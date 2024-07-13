@@ -30,6 +30,18 @@ use Piwik\Plugins\SimpleABTesting\Generator;
 class Controller extends \Piwik\Plugin\Controller
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            return $this->redirectToIndex('SimpleABTesting', 'index');
+        }
+
+        // $this->checkTokenInUrl();
+        Piwik::hasUserSuperUserAccess();
+    }
+
     public function index()
     {
         echo "Go to that <a href='/'>Dashboard</a> > Tests."; exit();
@@ -40,14 +52,6 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function addExperiment()
     {
-        
-        if ($_SERVER["REQUEST_METHOD"] != "POST") {
-            return $this->redirectToIndex('SimpleABTesting', 'index');
-        }
-
-        Piwik::hasUserSuperUserAccess();
-
-        //$this->checkTokenInUrl();
 
         $name = Common::getRequestVar('name');
         $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
@@ -77,15 +81,6 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function refreshCache()
     {
-
-        if ($_SERVER["REQUEST_METHOD"] != "POST") {
-            return $this->redirectToIndex('SimpleABTesting', 'index');
-        }
-
-        \Piwik\Piwik::checkUserHasSuperUserAccess();
-
-        // $this->checkTokenInUrl();
-
         $redirectUrl = $_POST['redirect_url'];
 
         $generator = new Generator;
@@ -99,13 +94,6 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function delete()
     {
-        if ($_SERVER["REQUEST_METHOD"] != "POST") {
-            return $this->redirectToIndex('SimpleABTesting', 'index');
-        }
-
-        Piwik::hasUserSuperUserAccess();
-        // $this->checkTokenInUrl();
-
         $redirectUrl = $_POST['redirect_url'];
         $id = Common::getRequestVar('id');
 
