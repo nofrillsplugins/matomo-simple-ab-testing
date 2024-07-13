@@ -1,4 +1,4 @@
-# Matomo SimpleABTesting Plugin
+# Matomo Simple A/B Testing Plugin
 
 ## Description
 
