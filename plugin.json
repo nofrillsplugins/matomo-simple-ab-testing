@@ -1,5 +1,5 @@
 {
-    "name": "SimpleABTesting",
+    "name": "Simple A/B Testing",
     "description": "A simple A\/B testing plugin",
     "version": "0.1.0",
     "theme": false,
@@ -23,7 +23,7 @@
         "docs": "",
         "rss": ""
     },
-    "homepage": "",
+    "homepage": "https://www.nofrillsplugins.com",
     "license": "GPL v3+",
     "keywords": []
 }
