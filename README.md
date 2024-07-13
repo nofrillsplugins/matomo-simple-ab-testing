@@ -2,6 +2,8 @@
 
 ## Description
 
+Free A/B Testing plugin for Matomo.
+
 I created this as an alternative to Google Optimize, which was a free A/B testing tool.
 
 Unfortunately, barely any tools are free, let alone affordable.
