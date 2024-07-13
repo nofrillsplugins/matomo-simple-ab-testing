@@ -1,7 +1,7 @@
 {
     "name": "Simple A/B Testing",
     "description": "A simple A\/B testing plugin",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "theme": false,
     "require": {
         "matomo": ">=5.0.0-alpha,<6.0.0-b1"
@@ -23,7 +23,7 @@
         "docs": "",
         "rss": ""
     },
-    "homepage": "https://www.nofrillsplugins.com",
+    "homepage": "https://www.nofrillsplugins.com/matomo-simple-ab-testing",
     "license": "GPL v3+",
     "keywords": []
 }
