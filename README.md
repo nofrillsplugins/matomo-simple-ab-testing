@@ -21,7 +21,7 @@ That is why I built Matomo Simple A/B Testing.
 Want more functionality? Of course, test the paid version of Matomo themselves.
 
 View at the Matomo plugin store:
-[Favorite A/B Testing Tools](https://plugins.matomo.org/SimpleABTesting)
+[Matomo Plugin Page](https://plugins.matomo.org/SimpleABTesting)
 
 Read more at the plugin page:
 [Matomo Simple A/B Testing](https://www.nofrillsplugins.com/matomo-simple-ab-testing)
