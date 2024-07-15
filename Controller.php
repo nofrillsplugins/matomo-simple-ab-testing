@@ -17,6 +17,7 @@ use Piwik\Url;
 use Piwik\Date;
 
 use Piwik\Plugins\SimpleABTesting\Generator;
+use Piwik\Plugins\SimpleABTesting\Helpers;
 
 /**
  * A controller lets you for example create a page that can be added to a menu. For more information read our guide
@@ -26,6 +27,8 @@ use Piwik\Plugins\SimpleABTesting\Generator;
  */
 class Controller extends \Piwik\Plugin\Controller
 {
+
+    use Helpers;
 
     public function __construct()
     {

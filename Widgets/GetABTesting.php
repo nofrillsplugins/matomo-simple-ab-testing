@@ -137,17 +137,6 @@ class GetABTesting extends Widget
         return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
     }
 
-    /**
-     * Method that gets the domain, extracted from the main url, by id
-     * @param  int    $idSite 
-     * @return string The domain
-     */
-    private function getSiteDomainFromId($idSite)
-    {
-        $site = new Site($idSite);
-        return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
-    }
-
     // http://matomo.test/index.php?module=CoreHome&action=index&idSite=1&period=day&date=yesterday#?idSite=1&period=day&date=yesterday&category=SimpleABTesting_Tests&subcategory=General_Overview
 
     // period=range&date=2024-07-08,2024-07-12&idSite=1&category=General_Visitors&subcategory=customdimension1

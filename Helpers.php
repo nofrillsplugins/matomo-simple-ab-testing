@@ -3,6 +3,7 @@ namespace Piwik\Plugins\SimpleABTesting;
 
 use Piwik\Common;
 use Piwik\Url;
+use Piwik\Site;
 
 trait Helpers
 {
@@ -58,5 +59,16 @@ trait Helpers
         $url = str_replace("www.", "", $url);
 
         return $url;
+    }
+
+    /**
+     * Method that gets the domain, extracted from the main url, by id
+     * @param  int    $idSite 
+     * @return string The domain
+     */
+    private function getSiteDomainFromId($idSite)
+    {
+        $site = new Site($idSite);
+        return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
     }
 }
