@@ -129,9 +129,11 @@ class GetABTesting extends Widget
 
         $message = Common::getRequestVar('message', '', 'string');
 
+        $nonce = \Piwik\Nonce::getNonce('SimpleABTesting.index');
+
         $domain = "todo.js";
 
-        return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl'));
+        return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
     }
 
     // http://matomo.test/index.php?module=CoreHome&action=index&idSite=1&period=day&date=yesterday#?idSite=1&period=day&date=yesterday&category=SimpleABTesting_Tests&subcategory=General_Overview

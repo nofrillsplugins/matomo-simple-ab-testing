@@ -34,17 +34,15 @@ class Controller extends \Piwik\Plugin\Controller
     {
         parent::__construct();
 
-        if ($_SERVER["REQUEST_METHOD"] != "POST") {
-            return $this->redirectToIndex('SimpleABTesting', 'index');
+        if (!Piwik::hasUserSuperUserAccess())
+        {
+            echo "Not allowed!"; exit();
         }
-
-        // $this->checkTokenInUrl();
-        Piwik::hasUserSuperUserAccess();
     }
 
     public function index()
     {
-        echo "Go to that <a href='/'>Dashboard</a> > Tests."; exit();
+        echo "Go to that <a href='/'>Home / Dashboard</a>."; exit();
     }
 
     /**
@@ -52,6 +50,7 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function addExperiment()
     {
+        $this->securityChecks();
 
         $name = Common::getRequestVar('name');
         $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
@@ -63,6 +62,7 @@ class Controller extends \Piwik\Plugin\Controller
         $customJs = Common::getRequestVar('js_insert', '', 'string');
         $idSite = Common::getRequestVar('idSite');
         $urlRegex = Common::getRequestVar('url_regex');
+
 
         $redirectUrl = $_POST['redirect_url'];
 
@@ -81,6 +81,8 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function refreshCache()
     {
+        $this->securityChecks();
+
         $redirectUrl = $_POST['redirect_url'];
 
         $generator = new Generator;
@@ -94,6 +96,8 @@ class Controller extends \Piwik\Plugin\Controller
      */
     public function delete()
     {
+        $this->securityChecks();
+
         $redirectUrl = $_POST['redirect_url'];
         $id = Common::getRequestVar('id');
 
@@ -111,6 +115,16 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $site = new Site($idSite);
         return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
+    }
+
+    private function securityChecks()
+    {
+        $nonce = Common::getRequestVar('nonce', false);
+
+        if ($_SERVER["REQUEST_METHOD"] != "POST" || !\Piwik\Nonce::verifyNonce('SimpleABTesting.index', $nonce)) {
+            echo "Not allowed. You can go to the <a href='/'>Dashboard / Home</a>.";
+            exit();
+        }
     }
 
 }

@@ -17,6 +17,7 @@
         <br>
         <form method="post" action="{{ actionUrl }}">
             <input type="hidden" name="redirect_url" value="{{ currentUrl }}">
+            <input type="hidden" name="nonce" value="{{ nonce }}" >
             <p>
                 <label for="name">Experiment Name (only alphanumeric characters, no spaces) - always use a new name to configure cookie conflicts</label>
                 <input type="text" name="name" id="name" required>
@@ -66,6 +67,7 @@ if (h1) {
 <div class="card">
     <div class="card-content">
         <h2>Existing Experiments</h2>
+        {% if experiments is not empty %}
         <table>
             <thead>
                 <tr>
@@ -99,6 +101,7 @@ if (h1) {
                     </td>
                     <td>
                         <form method="post" action="{{ deleteUrl }}">
+                            <input type="hidden" name="nonce" value="{{ nonce }}" >
                             <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Deleted%20experiment%20{{ experiment.name }}">
                             <input type="hidden" name="id" value="{{ experiment.id }}">
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -108,6 +111,11 @@ if (h1) {
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="alert">
+            Start adding some experiments above :-)
+        </div>
+        {% endif %}
     </div>
 </div>
 
@@ -151,7 +159,7 @@ if (h1) {
         <h2>Refresh cached JS + CSS inserts for all domains</h2>
         <p>This might take a while depending on the amount of domains and size of JS + CSS inserts</p>
         <form method="post" action="{{ refreshUrl }}">
-            <input type="hidden" name="token_auth" value="{{ token_auth }}" >
+            <input type="hidden" name="nonce" value="{{ nonce }}" >
             <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Flushed%20cache">
             <button class="btn" type="submit">Refresh cache</button>
         </form>
