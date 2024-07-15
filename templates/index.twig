@@ -47,11 +47,11 @@
                 <textarea name="css_insert" id="css_insert" style="min-height: 200px;" placeholder="Example: .h1 { display: none }"> </textarea>
             <p>
                 <label for="js_insert">Custom JS (For variant 1) - the example code removes the h1 tag</label>
-                <textarea name="js_insert" id="js_insert" style="min-height: 200px;">let h1 = document.querySelector('h1');
+                <textarea name="js_insert" id="js_insert" style="min-height: 200px;" placeholder="let h1 = document.querySelector('h1');
 
 if (h1) {
     h1.remove();
-}</textarea>
+}"></textarea>
             </p>
             <p>
                 <label for="custom_dimension">Use custom dimension id (e.g. 1,2,3,4,5). Make sure that they are <a href="{{ customDimensionsUrl }}">enabled here</a>. And that experiments don't overlap. Else it makes reporting more difficult.</label>
@@ -137,7 +137,7 @@ if (h1) {
         
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
-            <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;/script&gt;</pre>
+            <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;/script&gt;")&gt;&lt;/script&gt;</pre>
             <div class="copyToClipboardPositionDiv">
               <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
                 <i class="copyToClipboardIcon"></i>
