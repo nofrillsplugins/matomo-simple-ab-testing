@@ -64,7 +64,7 @@ class Controller extends \Piwik\Plugin\Controller
         $urlRegex = Common::getRequestVar('url_regex');
 
 
-        $redirectUrl = $_POST['redirect_url'];
+        $redirectUrl = $_POST['redirect_url'] . "&message=Experiment%20Created";
 
         $domain = $this->getSiteDomainFromId($idSite);
         

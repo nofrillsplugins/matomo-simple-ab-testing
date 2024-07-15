@@ -39,7 +39,7 @@
                 <input type="date" name="to_date" id="to_date" value="{{ formattedOneMonthLater }}" required>
             </p>
             <p>
-                <label for="name">Should display on URLs containing regex</label>
+                <label for="name">Should display on URLs containing regex (all pages is .*)</label>
                 <input type="text" name="url_regex" id="url_regex" placeholder="example: blogslug1|blog2slug|blogslug3" required>
             </p>
             <p>
@@ -133,11 +133,10 @@ if (h1) {
     <div class="card-content">
         <h2>Code to insert</h2>
         <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work</p>
-
         
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
-            <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;/script&gt;")&gt;&lt;/script&gt;</pre>
+            <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;\/script&gt;")&lt;/script&gt;</pre>
             <div class="copyToClipboardPositionDiv">
               <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
                 <i class="copyToClipboardIcon"></i>
@@ -156,8 +155,8 @@ if (h1) {
 
 <div class="card">
     <div class="card-content">
-        <h2>Refresh cached JS + CSS inserts for all domains</h2>
-        <p>This might take a while depending on the amount of domains and size of JS + CSS inserts</p>
+        <h2>Refresh cached JS + CSS inserts for this domain</h2>
+        <p>This might take a while depending on the amount of domains and size of JS + CSS inserts. You might need to refresh the cache for each domain.</p>
         <form method="post" action="{{ refreshUrl }}">
             <input type="hidden" name="nonce" value="{{ nonce }}" >
             <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Flushed%20cache">
