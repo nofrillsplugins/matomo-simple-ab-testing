@@ -1,7 +1,7 @@
 {
     "name": "SimpleABTesting",
-    "description": "A simple A\/B testing plugin",
-    "version": "0.1.6",
+    "description": "A free and simple A\/B testing plugin. Insert custom CSS / JS for your variant and you are done.",
+    "version": "0.1.7",
     "theme": false,
     "require": {
         "matomo": ">=5.0.0-alpha,<6.0.0-b1"

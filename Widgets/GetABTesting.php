@@ -14,6 +14,7 @@ use Piwik\Widget\WidgetConfig;
 use Piwik\Db;
 use Piwik\Url;
 use Piwik\Common;
+use Piwik\Site;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 
 /**
@@ -131,9 +132,20 @@ class GetABTesting extends Widget
 
         $nonce = \Piwik\Nonce::getNonce('SimpleABTesting.index');
 
-        $domain = "todo.js";
+        $domain = $this->getSiteDomainFromId($idSite);
 
         return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
+    }
+
+    /**
+     * Method that gets the domain, extracted from the main url, by id
+     * @param  int    $idSite 
+     * @return string The domain
+     */
+    private function getSiteDomainFromId($idSite)
+    {
+        $site = new Site($idSite);
+        return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
     }
 
     // http://matomo.test/index.php?module=CoreHome&action=index&idSite=1&period=day&date=yesterday#?idSite=1&period=day&date=yesterday&category=SimpleABTesting_Tests&subcategory=General_Overview

@@ -14,10 +14,7 @@ use Piwik\Common;
 use Piwik\View;
 use Piwik\Db;
 use Piwik\Url;
-use Piwik\Cache;
 use Piwik\Date;
-use Piwik\Log;
-use Piwik\Site;
 
 use Piwik\Plugins\SimpleABTesting\Generator;
 
@@ -104,17 +101,6 @@ class Controller extends \Piwik\Plugin\Controller
         Db::query('DELETE FROM ' . Common::prefixTable('ab_tests') . ' WHERE id = ?', [$id]);
 
         Url::redirectToUrl($redirectUrl);
-    }
-
-    /**
-     * Method that gets the domain, extracted from the main url, by id
-     * @param  int    $idSite 
-     * @return string The domain
-     */
-    private function getSiteDomainFromId($idSite)
-    {
-        $site = new Site($idSite);
-        return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
     }
 
     private function securityChecks()

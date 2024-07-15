@@ -4,7 +4,7 @@
 
 Free A/B Testing plugin for Matomo.
 
-I created this as an alternative to Google Optimize, which was a free A/B testing tool.
+I created this as an alternative to Google Optimize, which was a free A/B testing tool, but ended end 2024.
 
 Unfortunately, barely any tools are free, let alone affordable.
 
@@ -26,9 +26,9 @@ View at the Matomo plugin store:
 Read more at the plugin page:
 [Matomo Simple A/B Testing](https://www.nofrillsplugins.com/matomo-simple-ab-testing)
 
-Or try one of our recommended versions:
-[Favorite A/B Testing Tools](https://www.nofrillsplugins.com/blog/favorite-ab-testing-tools)
+Need more functionality?
+[Favorite (Paid) A/B Testing Tools](https://www.nofrillsplugins.com/blog/favorite-ab-testing-tools)
 
 ## Important to Know
 
-This is a beta version. Keep this in mind. For example, security measures like CSRF haven't fully been implemented yet.
+This is a beta version. Keep this in mind.
