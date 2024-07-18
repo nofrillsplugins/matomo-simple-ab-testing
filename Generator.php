@@ -130,7 +130,7 @@ class Generator extends \Piwik\Plugin
 
         function callDimension(customDimension, testName, currentVariant)
         {
-            let variantName = currentVariant ? 'variant' : 'control';
+            let variantName = currentVariant === '1' ? 'variant' : 'control';
 
             window._paq.push(['setCustomDimension', customDimension, testName + '-' + variantName]);
         }

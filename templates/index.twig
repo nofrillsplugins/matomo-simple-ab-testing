@@ -132,7 +132,24 @@ if (h1) {
 <div class="card">
     <div class="card-content">
         <h2>Code to insert</h2>
-        <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work</p>
+        <h3>OPTION1: If you have PHP installed on the tracking domain</h3>
+        <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
+        
+        <div id="javascript-text">
+          <div class="copyToClipboardWrapper">
+            <pre class="codeblock">&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=&lt;?= echo date(&#039;Y-m-D-H&#039;) ?&gt;&lt;/script&gt;</pre>
+            <div class="copyToClipboardPositionDiv">
+              <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
+                <i class="copyToClipboardIcon"></i>
+                <span class="copyToClipboardSpan">Copy</span>
+              </button>
+              <div class="copyToClipboardCopiedDiv" style="display: none;">Copied</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>OPTION2: If you don't have PHP installed on the tracking domain</h3>
+        <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
         
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
