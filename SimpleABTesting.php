@@ -2,10 +2,10 @@
 
 namespace Piwik\Plugins\SimpleABTesting;
 
-use Piwik\Menu\MenuTop;
 use Piwik\Common;
 use Piwik\Db;
 use Piwik\Plugins\SimpleABTesting\Generator;
+use Exception;
 
 class SimpleABTesting extends \Piwik\Plugin
 {

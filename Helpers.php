@@ -27,7 +27,8 @@ trait Helpers
             'date' => $date,
         ];
 
-        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) . '&category=' . $category . '&subcategory=' . $subcategory;
+        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) .
+               '&category=' . $category . '&subcategory=' . $subcategory;
     }
 
     private function getCustomDimensionsUrl()

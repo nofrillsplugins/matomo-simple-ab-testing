@@ -2,13 +2,7 @@
 
 namespace Piwik\Plugins\SimpleABTesting;
 
-use Piwik\Menu\MenuTop;
-use Piwik\Piwik;
 use Piwik\Common;
-use Piwik\Plugin;
-use Piwik\View;
-use Piwik\Db;
-use Piwik\Log;
 
 class Generator extends \Piwik\Plugin
 {

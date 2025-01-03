@@ -14,7 +14,6 @@ use Piwik\Widget\WidgetConfig;
 use Piwik\Db;
 use Piwik\Url;
 use Piwik\Common;
-use Piwik\Site;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 
 /**

@@ -11,19 +11,11 @@ namespace Piwik\Plugins\SimpleABTesting;
 
 use Piwik\Piwik;
 use Piwik\Common;
-use Piwik\View;
 use Piwik\Db;
 use Piwik\Url;
-use Piwik\Date;
 use Piwik\Plugins\SimpleABTesting\Generator;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 
-/**
- * A controller lets you for example create a page that can be added to a menu. For more information read our guide
- * http://developer.piwik.org/guides/mvc-in-piwik or have a look at the our API references for controller and view:
- * http://developer.piwik.org/api-reference/Piwik/Plugin/Controller and
- * http://developer.piwik.org/api-reference/Piwik/View
- */
 class Controller extends \Piwik\Plugin\Controller
 {
     use Helpers;
@@ -69,8 +61,11 @@ class Controller extends \Piwik\Plugin\Controller
 
         $customDimension = Common::getRequestVar('custom_dimension');
 
-        Db::query('INSERT INTO ' . Common::prefixTable('ab_tests') . ' SET idsite = ?, domain = ?, url_regex = ?, name = ?, hypothesis = ?, description = ?, from_date = ?, to_date = ?, css_insert = ?, js_insert = ?, custom_dimension = ?', [$idSite, $domain, $urlRegex, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs, $customDimension]);
-
+        Db::query(
+            'INSERT INTO ' .
+            Common::prefixTable('ab_tests') .
+            ' SET idsite = ?, domain = ?, url_regex = ?, name = ?, hypothesis = ?, description = ?, from_date = ?, to_date = ?, css_insert = ?, js_insert = ?, custom_dimension = ?',
+            [$idSite, $domain, $urlRegex, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs, $customDimension]);
 
         Url::redirectToUrl($redirectUrl);
     }
