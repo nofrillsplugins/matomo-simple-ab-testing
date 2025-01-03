@@ -20,7 +20,7 @@ class Tasks extends \Piwik\Plugin\Tasks
 
     public function myTaskWithParam($param)
     {
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->regenerateJS();
     }
 }

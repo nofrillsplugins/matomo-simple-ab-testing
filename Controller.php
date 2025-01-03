@@ -15,7 +15,6 @@ use Piwik\View;
 use Piwik\Db;
 use Piwik\Url;
 use Piwik\Date;
-
 use Piwik\Plugins\SimpleABTesting\Generator;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 
@@ -27,22 +26,22 @@ use Piwik\Plugins\SimpleABTesting\Helpers;
  */
 class Controller extends \Piwik\Plugin\Controller
 {
-
     use Helpers;
 
     public function __construct()
     {
         parent::__construct();
 
-        if (!Piwik::hasUserSuperUserAccess())
-        {
-            echo "Not allowed!"; exit();
+        if (!Piwik::hasUserSuperUserAccess()) {
+            echo "Not allowed!";
+            exit();
         }
     }
 
     public function index()
     {
-        echo "Go to that <a href='/'>Home / Dashboard</a>."; exit();
+        echo "Go to that <a href='/'>Home / Dashboard</a>.";
+        exit();
     }
 
     /**
@@ -67,7 +66,7 @@ class Controller extends \Piwik\Plugin\Controller
         $redirectUrl = $_POST['redirect_url'] . "&message=Experiment%20Created";
 
         $domain = $this->getSiteDomainFromId($idSite);
-        
+
         $customDimension = Common::getRequestVar('custom_dimension');
 
         Db::query('INSERT INTO ' . Common::prefixTable('ab_tests') . ' SET idsite = ?, domain = ?, url_regex = ?, name = ?, hypothesis = ?, description = ?, from_date = ?, to_date = ?, css_insert = ?, js_insert = ?, custom_dimension = ?', [$idSite, $domain, $urlRegex, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs, $customDimension]);
@@ -85,7 +84,7 @@ class Controller extends \Piwik\Plugin\Controller
 
         $redirectUrl = $_POST['redirect_url'];
 
-        $generator = new Generator;
+        $generator = new Generator();
         $generator->regenerateJS();
 
         Url::redirectToUrl($redirectUrl);
@@ -115,5 +114,4 @@ class Controller extends \Piwik\Plugin\Controller
             exit();
         }
     }
-
 }

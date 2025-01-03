@@ -85,18 +85,15 @@ class GetABTesting extends Widget
         $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$idSite]);
 
         $experiments = [];
-        foreach ($exps as $n => $exp)
-        {
+        foreach ($exps as $n => $exp) {
             $experiments[$n] = $exp;
             $experiments[$n]['css_insert'] = Common::unsanitizeInputValues($exp['css_insert']);
             $experiments[$n]['js_insert'] = Common::unsanitizeInputValues($exp['js_insert']);
 
-            if (!empty($exp['custom_dimension']))
-            {
-                $customDimensionsUrl = $this->getCustomUrl('range', $exp['from_date']  .',' . $exp['to_date'], 'General_Visitors', 'customdimension' . $exp['custom_dimension']);
+            if (!empty($exp['custom_dimension'])) {
+                $customDimensionsUrl = $this->getCustomUrl('range', $exp['from_date']  . ',' . $exp['to_date'], 'General_Visitors', 'customdimension' . $exp['custom_dimension']);
                 $experiments[$n]['report_url'] = $customDimensionsUrl;
             }
-            
         }
 
         $currentUrl = '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -117,7 +114,7 @@ class GetABTesting extends Widget
         ]);
 
         $today = new \DateTime();
-        $oneMonthLater = (clone $today)->modify('+1 month'); 
+        $oneMonthLater = (clone $today)->modify('+1 month');
 
         $formattedToday = $today->format('Y-m-d');
         $formattedOneMonthLater = $oneMonthLater->format('Y-m-d');
@@ -140,5 +137,4 @@ class GetABTesting extends Widget
     // http://matomo.test/index.php?module=CoreHome&action=index&idSite=1&period=day&date=yesterday#?idSite=1&period=day&date=yesterday&category=SimpleABTesting_Tests&subcategory=General_Overview
 
     // period=range&date=2024-07-08,2024-07-12&idSite=1&category=General_Visitors&subcategory=customdimension1
-
 }

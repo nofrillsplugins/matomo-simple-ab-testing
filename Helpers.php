@@ -1,4 +1,5 @@
 <?php
+
 namespace Piwik\Plugins\SimpleABTesting;
 
 use Piwik\Common;
@@ -11,7 +12,7 @@ trait Helpers
     {
         $baseUrl = Url::getCurrentUrlWithoutFileName();
         $idSite = Common::getRequestVar('idSite', 1, 'int');
-        
+
         $period = $period ?? Common::getRequestVar('period');
         $date = $date ?? Common::getRequestVar('date');
 
@@ -25,15 +26,15 @@ trait Helpers
             'period' => $period,
             'date' => $date,
         ];
-        
-        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) . '&category=' . $category .'&subcategory=' . $subcategory;
+
+        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) . '&category=' . $category . '&subcategory=' . $subcategory;
     }
 
     private function getCustomDimensionsUrl()
     {
         $baseUrl = Url::getCurrentUrlWithoutFileName();
         $idSite = Common::getRequestVar('idSite', 1, 'int');
-        
+
         $params = [
             'module' => 'CustomDimensions',
             'action' => 'manage',
@@ -41,7 +42,7 @@ trait Helpers
             'period' => 'day',
             'date' => 'today'
         ];
-        
+
         return $baseUrl . 'index.php?' . http_build_query($params);
     }
 
@@ -63,7 +64,7 @@ trait Helpers
 
     /**
      * Method that gets the domain, extracted from the main url, by id
-     * @param  int    $idSite 
+     * @param  int    $idSite
      * @return string The domain
      */
     private function getSiteDomainFromId($idSite)
