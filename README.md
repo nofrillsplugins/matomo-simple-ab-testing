@@ -16,9 +16,19 @@ That is why I built Matomo Simple A/B Testing.
 2. Give a name for the experiment.
 3. Insert custom CSS for the variant.
 4. And/or insert custom JS for the variant.
-5. Specify a regex for the page URLs where the experiment should be running.
+5. Specify a regex for the page URLs where the experiment should be running (this is not used when injecting the script with Matomo Tag Manager).
+6. Specify a Custom Dimension (a Visit Dimension) for the experiment.
 
-Want more functionality? Of course, test the paid version of Matomo themselves.
+## Use Simple A/B Testing with Matomo Tag Manager
+
+1. In your Matomo Tag Manager container, create a new tag - choose "Simple A/B Testing".
+2. Set a name for the tag
+3. Add description (optional)
+4. At "Configure what this tag should do", choose the the experiment you want to add.
+5. At "Configure when the tag should do this", choose a trigger (Page view works fine).
+6. Click "Create new tag"
+7. Publish the change of your container.
+8. Test it!
 
 View at the Matomo plugin store:
 [Matomo Plugin Page](https://plugins.matomo.org/SimpleABTesting)
