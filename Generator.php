@@ -3,6 +3,7 @@
 namespace Piwik\Plugins\SimpleABTesting;
 
 use Piwik\Common;
+use Piwik\Db;
 
 class Generator extends \Piwik\Plugin
 {
@@ -17,7 +18,10 @@ class Generator extends \Piwik\Plugin
             //Log::debug('pingDomain: ' . $domain);
             // Log::debug('pingSiteId: ' . $site['idsite']);
 
-            $experiments = \Piwik\Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$site['idsite']]);
+            $experiments = Db::fetchAll(
+                "SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?",
+                [$site['idsite']]
+            );
 
             if (!empty($experiments)) {
                 $this->generateJS($domain, $experiments);

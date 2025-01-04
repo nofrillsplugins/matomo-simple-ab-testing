@@ -5,6 +5,7 @@ namespace Piwik\Plugins\SimpleABTesting;
 use Piwik\Common;
 use Piwik\Url;
 use Piwik\Site;
+use Piwik\Db;
 
 trait Helpers
 {
@@ -16,7 +17,7 @@ trait Helpers
         $period = $period ?? Common::getRequestVar('period');
         $date = $date ?? Common::getRequestVar('date');
 
-        $category = $category ?? 'SimpleABTesting_Tests';
+        $category = $category ?? 'SimpleABTesting_SimpleABTesting';
         $subcategory = $subcategory ?? 'General_Overview';
 
         $params = [
@@ -72,5 +73,10 @@ trait Helpers
     {
         $site = new Site($idSite);
         return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
+    }
+
+    private function getDb()
+    {
+        return Db::get();
     }
 }

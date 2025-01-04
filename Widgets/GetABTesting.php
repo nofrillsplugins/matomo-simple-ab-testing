@@ -15,6 +15,7 @@ use Piwik\Db;
 use Piwik\Url;
 use Piwik\Common;
 use Piwik\Plugins\SimpleABTesting\Helpers;
+use Piwik\Request;
 
 /**
  * This class allows you to add your own widget to the Piwik platform. In case you want to remove widgets from another
@@ -32,7 +33,7 @@ class GetABTesting extends Widget
          * Set the category the widget belongs to. You can reuse any existing widget category or define
          * your own category.
          */
-        $config->setCategoryId('SimpleABTesting_Tests');
+        $config->setCategoryId('SimpleABTesting_SimpleABTesting');
 
         /**
          * Set the subcategory the widget belongs to. If a subcategory is set, the widget will be shown in the UI.
@@ -48,25 +49,7 @@ class GetABTesting extends Widget
          * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
          */
         $config->setOrder(99);
-
-        /**
-         * Optionally set URL parameters that will be used when this widget is requested.
-         * $config->setParameters(array('myparam' => 'myvalue'));
-         */
-
         $config->setIsEnabled(\Piwik\Piwik::hasUserSuperUserAccess());
-
-        /**
-         * Define whether a widget is enabled or not. For instance some widgets might not be available to every user or
-         * might depend on a setting (such as Ecommerce) of a site. In such a case you can perform any checks and then
-         * set `true` or `false`. If your widget is only available to users having super user access you can do the
-         * following:
-         *
-         * $config->setIsEnabled(\Piwik\Piwik::hasUserSuperUserAccess());
-         * or
-         * if (!\Piwik\Piwik::hasUserSuperUserAccess())
-         *     $config->disable();
-         */
     }
 
     /**
@@ -79,8 +62,7 @@ class GetABTesting extends Widget
      */
     public function render()
     {
-        $idSite = Common::getRequestVar('idSite');
-
+        $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
         $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$idSite]);
 
         $experiments = [];
@@ -124,7 +106,7 @@ class GetABTesting extends Widget
         $currentUrl = $this->getCustomUrl();
         $customDimensionsUrl = $this->getCustomDimensionsUrl();
 
-        $message = Common::getRequestVar('message', '', 'string');
+        $message = trim(Request::fromRequest()->getStringParameter('message', ''));
 
         $nonce = \Piwik\Nonce::getNonce('SimpleABTesting.index');
 

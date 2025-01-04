@@ -15,6 +15,8 @@ use Piwik\Db;
 use Piwik\Url;
 use Piwik\Plugins\SimpleABTesting\Generator;
 use Piwik\Plugins\SimpleABTesting\Helpers;
+use Piwik\Request;
+use Exception;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -43,29 +45,42 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $this->securityChecks();
 
-        $name = Common::getRequestVar('name');
+        $name = trim(Request::fromRequest()->getStringParameter('name', 'string'));
         $name = preg_replace('/[^a-zA-Z0-9]/', '', $name);
-        $hypothesis = Common::getRequestVar('hypothesis');
-        $description = Common::getRequestVar('description');
-        $fromDate = Common::getRequestVar('from_date');
-        $toDate = Common::getRequestVar('to_date');
-        $cssInsert = Common::getRequestVar('css_insert', '', 'string');
-        $customJs = Common::getRequestVar('js_insert', '', 'string');
-        $idSite = Common::getRequestVar('idSite');
-        $urlRegex = Common::getRequestVar('url_regex');
-
-
+        $hypothesis = trim(Request::fromRequest()->getStringParameter('hypothesis', 'string'));
+        $description = trim(Request::fromRequest()->getStringParameter('description', 'string'));
+        $fromDate = trim(Request::fromRequest()->getStringParameter('from_date', 'string'));
+        $toDate = trim(Request::fromRequest()->getStringParameter('to_date', 'string'));
+        $cssInsert = trim(Request::fromRequest()->getStringParameter('css_insert', 'string'));
+        $customJs = trim(Request::fromRequest()->getStringParameter('js_insert', 'string'));
+        $idSite = trim(Request::fromRequest()->getIntegerParameter('idSite', 0));
+        $urlRegex = trim(Request::fromRequest()->getStringParameter('url_regex', 'string'));
         $redirectUrl = $_POST['redirect_url'] . "&message=Experiment%20Created";
-
         $domain = $this->getSiteDomainFromId($idSite);
+        $customDimension = trim(Request::fromRequest()->getStringParameter('custom_dimension', 'string'));
 
-        $customDimension = Common::getRequestVar('custom_dimension');
-
-        Db::query(
-            'INSERT INTO ' .
-            Common::prefixTable('ab_tests') .
-            ' SET idsite = ?, domain = ?, url_regex = ?, name = ?, hypothesis = ?, description = ?, from_date = ?, to_date = ?, css_insert = ?, js_insert = ?, custom_dimension = ?',
-            [$idSite, $domain, $urlRegex, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs, $customDimension]);
+        $query = "INSERT INTO `" . Common::prefixTable('ab_tests') .
+                 "` (idsite, domain, url_regex, name, hypothesis, description, from_date, to_date, css_insert, js_insert, custom_dimension) " .
+                 "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        $params = [
+            $idSite,
+            $domain,
+            $urlRegex,
+            $name,
+            $hypothesis,
+            $description,
+            $fromDate,
+            $toDate,
+            $cssInsert,
+            $customJs,
+            $customDimension
+        ];
+        try {
+            $db = $this->getDb();
+            $db->query($query, $params);
+        } catch (Exception $e) {
+            throw $e;
+        }
 
         Url::redirectToUrl($redirectUrl);
     }
@@ -93,7 +108,7 @@ class Controller extends \Piwik\Plugin\Controller
         $this->securityChecks();
 
         $redirectUrl = $_POST['redirect_url'];
-        $id = Common::getRequestVar('id');
+        $id = trim(Request::fromRequest()->getIntegerParameter('id', 0));
 
         Db::query('DELETE FROM ' . Common::prefixTable('ab_tests') . ' WHERE id = ?', [$id]);
 
@@ -103,6 +118,7 @@ class Controller extends \Piwik\Plugin\Controller
     private function securityChecks()
     {
         $nonce = Common::getRequestVar('nonce', false);
+        //$nonce = trim(Request::fromRequest()->getStringParameter('nonce', 'string'));
 
         if ($_SERVER["REQUEST_METHOD"] != "POST" || !\Piwik\Nonce::verifyNonce('SimpleABTesting.index', $nonce)) {
             echo "Not allowed. You can go to the <a href='/'>Dashboard / Home</a>.";
