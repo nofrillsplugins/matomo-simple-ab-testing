@@ -1,6 +1,9 @@
 {
     "SimpleABTesting": {
         "SimpleABTesting": "Simple A/B Testing",
+        "TagTitle": "Simple A/B Testing",
+        "SimpleABTestingTagDescription": "Adds a tag for a Simple A/B Testing experiment",
+        "TagChooseExperiment": "Choose experiment",
         "Tests": "Tests",
         "ABTesting": "AB Testing",
         "ABVariant": "ABVariant",
