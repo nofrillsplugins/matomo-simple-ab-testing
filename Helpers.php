@@ -25,11 +25,10 @@ trait Helpers
             'action' => 'index',
             'idSite' => $idSite,
             'period' => $period,
-            'date' => $date,
         ];
 
         return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) .
-               '&category=' . $category . '&subcategory=' . $subcategory;
+               '&category=' . $category . '&subcategory=' . $subcategory . '&date=' . $date;
     }
 
     private function getCustomDimensionsUrl()

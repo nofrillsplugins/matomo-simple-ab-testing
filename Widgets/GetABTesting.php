@@ -72,7 +72,11 @@ class GetABTesting extends Widget
             $experiments[$n]['js_insert'] = Common::unsanitizeInputValues($exp['js_insert']);
 
             if (!empty($exp['custom_dimension'])) {
-                $customDimensionsUrl = $this->getCustomUrl('range', $exp['from_date']  . ',' . $exp['to_date'], 'General_Visitors', 'customdimension' . $exp['custom_dimension']);
+                $customDimensionsUrl = $this->getCustomUrl(
+                    'day',
+                    $exp['from_date'],
+                    'General_Visitors',
+                    'customdimension' . $exp['custom_dimension']);
                 $experiments[$n]['report_url'] = $customDimensionsUrl;
             }
         }
@@ -114,8 +118,4 @@ class GetABTesting extends Widget
 
         return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
     }
-
-    // http://matomo.test/index.php?module=CoreHome&action=index&idSite=1&period=day&date=yesterday#?idSite=1&period=day&date=yesterday&category=SimpleABTesting_Tests&subcategory=General_Overview
-
-    // period=range&date=2024-07-08,2024-07-12&idSite=1&category=General_Visitors&subcategory=customdimension1
 }

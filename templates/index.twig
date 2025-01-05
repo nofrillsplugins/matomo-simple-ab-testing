@@ -13,50 +13,47 @@
 
 <div class="card">
     <div class="card-content">
-        <h2>A/B Testing Experiments</h2>
+        <h2>Create a new experiment</h2>
         <br>
         <form method="post" action="{{ actionUrl }}">
             <input type="hidden" name="redirect_url" value="{{ currentUrl }}">
             <input type="hidden" name="nonce" value="{{ nonce }}" >
-            <p>
+            <div class="row s12 input-field m6">
                 <label for="name">Experiment Name (only alphanumeric characters, no spaces) - always use a new name to configure cookie conflicts</label>
                 <input type="text" name="name" id="name" required>
-            </p>
-            <p>
+            </div>
+            <div class="row s12 input-field m6">
                 <label for="hypothesis">Hypothesis</label>
                 <input type="text" name="hypothesis" id="hypothesis">
-            </p>
-            <p>
+            </div>
+            <div class="row s12 input-field m6">
                 <label for="description">Description</label>
                 <input type="text" name="description" id="description">
-            </p>
-            <p>
+            </div>
+            <div class="row s12 input-field m6">
                 <label for="from_date">From Date - The date starts at 00:00 UTC</label>
                 <input type="date" name="from_date" id="from_date" value="{{ formattedToday }}" required>
-            </p>
-            <p>
+            </div>
+            <div class="row s12 input-field m6">
                 <label for="to_date">To Date - The date starts ends at 23:59 UTC</label>
                 <input type="date" name="to_date" id="to_date" value="{{ formattedOneMonthLater }}" required>
-            </p>
-            <p>
-                <label for="name">Should display on URLs containing regex (all pages is .*)</label>
-                <input type="text" name="url_regex" id="url_regex" placeholder="example: blogslug1|blog2slug|blogslug3" required>
-            </p>
-            <p>
+            </div>
+            <div class="row s12 m6">
+                <label for="name">Should display on URLs containing regex (all pages is .*). Not needed if using the Matomo Tag Manager to add the experiment.</label>
+                <input type="text" name="url_regex" id="url_regex">
+            </div>
+            <div class="row s12 m6">
                 <label for="css_insert">CSS insert (For variant 1) - the example code removes the h1 tag</label>
-                <textarea name="css_insert" id="css_insert" style="min-height: 200px;" placeholder="Example: .h1 { display: none }"> </textarea>
-            <p>
+                <textarea name="css_insert" id="css_insert" class="materialize-textarea" placeholder="Example: .h1 { display: none }"> </textarea>
+            </div>
+            <div class="row s12 m6">
                 <label for="js_insert">Custom JS (For variant 1) - the example code removes the h1 tag</label>
-                <textarea name="js_insert" id="js_insert" style="min-height: 200px;" placeholder="let h1 = document.querySelector('h1');
-
-if (h1) {
-    h1.remove();
-}"></textarea>
-            </p>
-            <p>
+                <textarea name="js_insert" id="js_insert" class="materialize-textarea"></textarea>
+            </div>
+            <div class="row s12 input-field m6">
                 <label for="custom_dimension">Use custom dimension id (e.g. 1,2,3,4,5). Make sure that they are <a href="{{ customDimensionsUrl }}">enabled here</a>. And that experiments don't overlap. Else it makes reporting more difficult.</label>
-                <input type="number" name="custom_dimension" id="custom_dimension" required>
-            </p>
+                <input type="number" name="custom_dimension" id="custom_dimension" min="1" required>
+            </div>
             <p>
                 <input type="submit" value="Add Experiment" class="btn">
             </p>
@@ -119,22 +116,17 @@ if (h1) {
     </div>
 </div>
 
-
 <div class="card">
     <div class="card-content">
-        <h2>View results</h2>
-        <p>You can view the results by getting the custom dimensions reports and adjusting the right dates. You can click on the "view report" buttons above</p>
-        <h2>Statistical significance</h2>
-        <a class="btn" href="https://www.devproblems.com/statistical-significance-calculator/" target="_blank">Calculate statistical significance</a>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-content">
-        <h2>Code to insert</h2>
-        <h3>OPTION1: If you have PHP installed on the tracking domain</h3>
+        <h2>Insert experiment with Matomo Tag Manager</h2>
+        <p>The easiest way to use Simple A/B Testing is to use the Matomo Tag Manager,
+            when you do not need to add other scripts to the site, or have script served from
+            the plugin directory.
+        </p>
+        <h2>Manually insert code</h2>
+        <h3>OPTION 1: If you have PHP installed on the tracking domain</h3>
         <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
-        
+
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
             <pre class="codeblock">&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=&lt;?= echo date(&#039;Y-m-D-H&#039;) ?&gt;&lt;/script&gt;</pre>
@@ -148,9 +140,9 @@ if (h1) {
           </div>
         </div>
 
-        <h3>OPTION2: If you don't have PHP installed on the tracking domain</h3>
+        <h3>OPTION 2: If you don't have PHP installed on the tracking domain</h3>
         <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
-        
+
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
             <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;\/script&gt;")&lt;/script&gt;</pre>
@@ -182,18 +174,10 @@ if (h1) {
     </div>
 </div>
 
-<div class="card">
-    <div class="card-content">
-        <h2>Want to have more functionality?</h2>
-        <p>View our recommendations for alternative free & paid software.</p>
-        <a class="btn" target="_blank" href="https://www.nofrillsplugins.com/blog/favorite-ab-testing-tools" target="_blank">View other A/B testing tools</a>
-    </div>
-</div>
-
 <script>
 function copyToClipboard(button) {
   const textToCopy = button.closest('.copyToClipboardWrapper').querySelector('.codeblock').innerText;
-  
+
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(textToCopy).then(() => {
       showCopiedMessage(button);

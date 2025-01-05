@@ -1,16 +1,16 @@
 {
     "name": "SimpleABTesting",
-    "description": "A free and simple A\/B testing plugin. Insert custom CSS / JS for your variant and you are done.",
+    "description": "A free and simple A\/B testing plugin. Insert custom CSS \/ JS for your variant and you are done.",
     "version": "0.1.94",
     "theme": false,
     "require": {
-        "matomo": ">=5.0.0-alpha,<6.0.0-b1"
+        "matomo": ">=5.0.0-stable,<6.0.0-b1"
     },
     "authors": [
         {
             "name": "No Frills Plugins",
             "email": "",
-            "homepage": "https://www.nofrillsplugins.com"
+            "homepage": "https:\/\/www.nofrillsplugins.com"
         }
     ],
     "support": {
@@ -23,7 +23,7 @@
         "docs": "",
         "rss": ""
     },
-    "homepage": "https://www.nofrillsplugins.com/matomo-simple-ab-testing",
+    "homepage": "https:\/\/www.nofrillsplugins.com\/matomo-simple-ab-testing",
     "license": "GPL v3+",
     "keywords": []
 }
