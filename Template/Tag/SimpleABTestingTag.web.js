@@ -34,14 +34,12 @@
                           insertJS(scriptText);
                           // Testing to use track event for tests.
                           // We need a way to catch these with a dimension in the plugin though.
-                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'variant']);
-                          //callDimension(customDimension, originalName, currentVariant);
+                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'variant', '1']);
                       } catch (e) {
                           console.error("Error in script execution", e);
                       }
                   } else {
-                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'original']);
-                      //callDimension(customDimension, originalName, currentVariant);
+                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'original', '1']);
                   }
               }
           }
@@ -64,18 +62,6 @@
               script.type = "text/javascript";
               script.text = scriptText;
               document.head.appendChild(script);
-          }
-
-          /**
-           * Function to call a custom dimension
-           */
-          function callDimension(customDimension, testName, currentVariant) {
-              const variantName = currentVariant === VARIANT_TEST ? "variant" : "original";
-              window._paq.push([
-                  "setCustomDimension",
-                  customDimension,
-                  testName + "-" + variantName,
-              ]);
           }
 
           /**
