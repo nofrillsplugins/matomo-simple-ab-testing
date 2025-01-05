@@ -1,10 +1,5 @@
-<style type="text/css">
-.btn-danger { background: darkred !important; }
-.btn { margin-bottom: 3px;}
-</style>
-
+{% block content %}
 <h1>Simple A/B Testing</h1>
-
 {% if message is not empty %}
 <div class="alert">
     {{ message }}
@@ -12,6 +7,7 @@
 {% endif %}
 
 <div class="card">
+
     <div class="card-content">
         <h2>Create a new experiment</h2>
         <br>
@@ -39,10 +35,6 @@
                 <input type="date" name="to_date" id="to_date" value="{{ formattedOneMonthLater }}" required>
             </div>
             <div class="row s12 m6">
-                <label for="name">Should display on URLs containing regex (all pages is .*). Not needed if using the Matomo Tag Manager to add the experiment.</label>
-                <input type="text" name="url_regex" id="url_regex">
-            </div>
-            <div class="row s12 m6">
                 <label for="css_insert">CSS insert (For variant 1) - the example code removes the h1 tag</label>
                 <textarea name="css_insert" id="css_insert" class="materialize-textarea" placeholder="Example: .h1 { display: none }"> </textarea>
             </div>
@@ -60,3 +52,4 @@
         </form>
     </div>
 </div>
+{% endblock %}

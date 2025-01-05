@@ -43,13 +43,13 @@ class GetInsertExperiment extends Widget
         /**
          * Set the name of the widget belongs to.
          */
-        $config->setName('InsertExperiment');
+        $config->setName('SimpleABTesting_InsertExperiment');
 
         /**
          * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
          */
-        $config->setOrder(91);
-        $config->setIsEnabled(\Piwik\Piwik::hasUserSuperUserAccess());
+        $config->setOrder(92);
+        $config->setIsEnabled(\Piwik\Piwik::isUserHasSomeAdminAccess());
     }
 
     /**
@@ -63,7 +63,7 @@ class GetInsertExperiment extends Widget
     public function render()
     {
         $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
-        $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$idSite]);
+        $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('simple_ab_testing_experiments') . " WHERE idsite = ?", [$idSite]);
 
         $experiments = [];
         foreach ($exps as $n => $exp) {
@@ -76,7 +76,8 @@ class GetInsertExperiment extends Widget
                     'day',
                     $exp['from_date'],
                     'General_Visitors',
-                    'customdimension' . $exp['custom_dimension']);
+                    'customdimension' . $exp['custom_dimension']
+                );
                 $experiments[$n]['report_url'] = $customDimensionsUrl;
             }
         }
@@ -105,7 +106,6 @@ class GetInsertExperiment extends Widget
         $formattedOneMonthLater = $oneMonthLater->format('Y-m-d');
 
         $baseUrl = Url::getCurrentUrlWithoutFileName();
-        $baseHost = $this->getHost($baseUrl);
 
         $currentUrl = $this->getCustomUrl();
         $customDimensionsUrl = $this->getCustomDimensionsUrl();
@@ -114,8 +114,7 @@ class GetInsertExperiment extends Widget
 
         $nonce = \Piwik\Nonce::getNonce('SimpleABTesting.index');
 
-        $domain = $this->getSiteDomainFromId($idSite);
 
-        return $this->renderTemplate('insert', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
+        return $this->renderTemplate('insert', compact('experiments', 'message', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
     }
 }

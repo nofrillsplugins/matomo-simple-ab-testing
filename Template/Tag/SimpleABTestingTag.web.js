@@ -10,7 +10,7 @@
           const js = decodeURIComponent(parts[4].replace(/\+/g, "%20"));
           const dimension = parts[5];
           const _paq = (window._paq = window._paq || []);
-          const VARIANT_CONTROL = "0";
+          const VARIANT_ORIGINAL = "0";
           const VARIANT_TEST = "1";
 
           initExp(_paq, name, start, stop, js, css, dimension);
@@ -23,8 +23,8 @@
 
               if (currentDate >= startDate && currentDate <= endDate) {
                   if (!currentVariant) {
-                      // Randomly assign variant 0 or 1
-                      currentVariant = Math.random() < 0.5 ? VARIANT_CONTROL : VARIANT_TEST;
+                      // Randomly assign original or variant.
+                      currentVariant = Math.random() < 0.5 ? VARIANT_ORIGINAL : VARIANT_TEST;
                       setCookie(testName, currentVariant, testEndDate);
                   }
                   if (currentVariant === VARIANT_TEST) {
@@ -65,7 +65,7 @@
            * Function to call a custom dimension
            */
           function callDimension(customDimension, testName, currentVariant) {
-              const variantName = currentVariant === VARIANT_TEST ? "variant" : "control";
+              const variantName = currentVariant === VARIANT_TEST ? "variant" : "original";
               window._paq.push([
                   "setCustomDimension",
                   customDimension,

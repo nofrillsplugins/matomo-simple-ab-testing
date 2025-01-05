@@ -1,110 +1,17 @@
-<style type="text/css">
-    .btn-danger { background: darkred !important; }
-    .btn { margin-bottom: 3px;}
-    </style>
-
-    <h1>Simple A/B Testing</h1>
-
-    {% if message is not empty %}
-    <div class="alert">
-        {{ message }}
-    </div>
-    {% endif %}
+{% block content %}
+<h1>Simple A/B Testing</h1>
+{% if message is not empty %}
+<div class="alert">
+    {{ message }}
+</div>
+{% endif %}
 
     <div class="card">
         <div class="card-content">
             <h2>Insert experiment with Matomo Tag Manager</h2>
-            <p>The easiest way to use Simple A/B Testing is to use the Matomo Tag Manager,
-                when you do not need to add other scripts to the site, or have script served from
-                the plugin directory.
+            <p>To insert an experiment, you need to use Matomo Tag Manager.
             </p>
-            <h2>Manually insert code</h2>
-            <h3>OPTION 1: If you have PHP installed on the tracking domain</h3>
-            <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
-
-            <div id="javascript-text">
-              <div class="copyToClipboardWrapper">
-                <pre class="codeblock">&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=&lt;?= echo date(&#039;Y-m-D-H&#039;) ?&gt;&lt;/script&gt;</pre>
-                <div class="copyToClipboardPositionDiv">
-                  <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
-                    <i class="copyToClipboardIcon"></i>
-                    <span class="copyToClipboardSpan">Copy</span>
-                  </button>
-                  <div class="copyToClipboardCopiedDiv" style="display: none;">Copied</div>
-                </div>
-              </div>
-            </div>
-
-            <h3>OPTION 2: If you don't have PHP installed on the tracking domain</h3>
-            <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
-
-            <div id="javascript-text">
-              <div class="copyToClipboardWrapper">
-                <pre class="codeblock">&lt;script&gt;document.write("&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=" + new Date().toISOString().slice(0,13).replace('T','') + "'&gt;&lt;\/script&gt;")&lt;/script&gt;</pre>
-                <div class="copyToClipboardPositionDiv">
-                  <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
-                    <i class="copyToClipboardIcon"></i>
-                    <span class="copyToClipboardSpan">Copy</span>
-                  </button>
-                  <div class="copyToClipboardCopiedDiv" style="display: none;">Copied</div>
-                </div>
-              </div>
-            </div>
-
-            <h3>Just to make sure, the CSS + JS codes from your experiments are updated every hour (if the cron is enabled)</h3>
-            <h4>Make sure that you have the Matomo cron enabled to auto-update the code every hour. Else, you have to refresh the cache manually below on each code change</h4>
 
         </div>
     </div>
-
-    <div class="card">
-        <div class="card-content">
-            <h2>Refresh cached JS + CSS inserts for this domain</h2>
-            <p>This might take a while depending on the amount of domains and size of JS + CSS inserts. You might need to refresh the cache for each domain.</p>
-            <form method="post" action="{{ refreshUrl }}">
-                <input type="hidden" name="nonce" value="{{ nonce }}" >
-                <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Flushed%20cache">
-                <button class="btn" type="submit">Refresh cache</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-    function copyToClipboard(button) {
-      const textToCopy = button.closest('.copyToClipboardWrapper').querySelector('.codeblock').innerText;
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          showCopiedMessage(button);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          fallbackCopyTextToClipboard(textToCopy, button);
-        });
-      } else {
-        fallbackCopyTextToClipboard(textToCopy, button);
-      }
-    }
-
-    function fallbackCopyTextToClipboard(text, button) {
-      const tempTextarea = document.createElement('textarea');
-      tempTextarea.value = text;
-      document.body.appendChild(tempTextarea);
-      tempTextarea.select();
-      try {
-        document.execCommand('copy');
-        showCopiedMessage(button);
-      } catch (err) {
-        console.error('Fallback: Oops, unable to copy', err);
-      }
-      document.body.removeChild(tempTextarea);
-    }
-
-    function showCopiedMessage(button) {
-      button.querySelector('.copyToClipboardSpan').style.display = 'none';
-      button.nextElementSibling.style.display = 'inline';
-      setTimeout(() => {
-        button.querySelector('.copyToClipboardSpan').style.display = 'inline';
-        button.nextElementSibling.style.display = 'none';
-      }, 2000);
-    }
-    </script>
+{% endblock %}

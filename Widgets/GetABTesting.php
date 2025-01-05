@@ -49,7 +49,7 @@ class GetABTesting extends Widget
          * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
          */
         $config->setOrder(90);
-        $config->setIsEnabled(\Piwik\Piwik::hasUserSuperUserAccess());
+        $config->setIsEnabled(\Piwik\Piwik::isUserHasSomeAdminAccess());
     }
 
     /**
@@ -63,7 +63,7 @@ class GetABTesting extends Widget
     public function render()
     {
         $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
-        $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$idSite]);
+        $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('simple_ab_testing_experiments') . " WHERE idsite = ?", [$idSite]);
 
         $experiments = [];
         foreach ($exps as $n => $exp) {
@@ -76,7 +76,8 @@ class GetABTesting extends Widget
                     'day',
                     $exp['from_date'],
                     'General_Visitors',
-                    'customdimension' . $exp['custom_dimension']);
+                    'customdimension' . $exp['custom_dimension']
+                );
                 $experiments[$n]['report_url'] = $customDimensionsUrl;
             }
         }

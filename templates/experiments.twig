@@ -1,10 +1,5 @@
-<style type="text/css">
-.btn-danger { background: darkred !important; }
-.btn { margin-bottom: 3px;}
-</style>
-
+{% block content %}
 <h1>Simple A/B Testing</h1>
-
 {% if message is not empty %}
 <div class="alert">
     {{ message }}
@@ -21,7 +16,6 @@
                     <th>Name</th>
                     <th>From Date</th>
                     <th>To Date</th>
-                    <th>URL Regex</th>
                     <th>Inserted CSS</th>
                     <th>Inserted JS</th>
                     <th>Custom dimension ID</th>
@@ -35,7 +29,6 @@
                     <td>{{ experiment.name }}</td>
                     <td>{{ experiment.from_date }}</td>
                     <td>{{ experiment.to_date }}</td>
-                    <td>{{ experiment.url_regex }}</td>
                     <td>{{ experiment.css_insert }}</td>
                     <td>{{ experiment.js_insert }}</td>
                     <td>{{ experiment.custom_dimension }}</td>
@@ -60,8 +53,9 @@
         </table>
         {% else %}
         <div class="alert">
-            Start adding some experiments above :-)
+            No existing experiments for this site.
         </div>
         {% endif %}
     </div>
 </div>
+{% endblock %}
