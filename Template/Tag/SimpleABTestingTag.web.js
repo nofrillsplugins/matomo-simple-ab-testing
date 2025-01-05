@@ -3,7 +3,8 @@
       this.fire = function () {
           const experiment = parameters.get("experiment");
           const parts = experiment.split(",");
-          const name = "ab_" + parts[0];
+          const name = "sabt_" + parts[0];
+          const original_name = parts[0];
           const start = parts[1] + "T00:00:00Z";
           const stop = parts[2] + "T23:59:00Z";
           const css = decodeURIComponent(parts[3].replace(/\+/g, "%20"));
@@ -13,9 +14,9 @@
           const VARIANT_ORIGINAL = "0";
           const VARIANT_TEST = "1";
 
-          initExp(_paq, name, start, stop, js, css, dimension);
+          initExp(_paq, name, start, stop, js, css, dimension, original_name);
 
-          function initExp(_paq, testName, testStartDate, testEndDate, scriptText, cssText, customDimension) {
+          function initExp(_paq, testName, testStartDate, testEndDate, scriptText, cssText, customDimension, originalName) {
               let currentVariant = getCookie(testName);
               const currentDate = new Date();
               const startDate = new Date(testStartDate);
@@ -31,12 +32,16 @@
                       try {
                           insertCSS(cssText);
                           insertJS(scriptText);
-                          callDimension(customDimension, testName, currentVariant);
+                          // Testing to use track event for tests.
+                          // We need a way to catch these with a dimension in the plugin though.
+                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'variant']);
+                          //callDimension(customDimension, originalName, currentVariant);
                       } catch (e) {
                           console.error("Error in script execution", e);
                       }
                   } else {
-                      callDimension(customDimension, testName, currentVariant);
+                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'original']);
+                      //callDimension(customDimension, originalName, currentVariant);
                   }
               }
           }

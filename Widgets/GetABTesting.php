@@ -17,52 +17,28 @@ use Piwik\Common;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 use Piwik\Request;
 
-/**
- * This class allows you to add your own widget to the Piwik platform. In case you want to remove widgets from another
- * plugin please have a look at the "configureWidgetsList()" method.
- * To configure a widget simply call the corresponding methods as described in the API-Reference:
- * http://developer.piwik.org/api-reference/Piwik/Plugin\Widget
- */
 class GetABTesting extends Widget
 {
     use Helpers;
 
     public static function configure(WidgetConfig $config)
     {
-        /**
-         * Set the category the widget belongs to. You can reuse any existing widget category or define
-         * your own category.
-         */
         $config->setCategoryId('SimpleABTesting_SimpleABTesting');
-
-        /**
-         * Set the subcategory the widget belongs to. If a subcategory is set, the widget will be shown in the UI.
-         */
         $config->setSubcategoryId('SimpleABTesting_CreateNewExperiment');
-
-        /**
-         * Set the name of the widget belongs to.
-         */
         $config->setName('SimpleABTesting_CreateNewExperiment');
-
-        /**
-         * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
-         */
         $config->setOrder(90);
         $config->setIsEnabled(\Piwik\Piwik::isUserHasSomeAdminAccess());
     }
 
     /**
-     * This method renders the widget. It's on you how to generate the content of the widget.
-     * As long as you return a string everything is fine. You can use for instance a "Piwik\View" to render a
-     * twig template. In such a case don't forget to create a twig template (eg. myViewTemplate.twig) in the
-     * "templates" directory of your plugin.
-     *
      * @return string
      */
-    public function render()
+    public function render($idSite = null)
     {
-        $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
+        if (!isset($idSite)) {
+            $idSite = Request::fromRequest()->getIntegerParameter('idSite', 0);
+        }
+
         $exps = Db::fetchAll("SELECT * FROM " . Common::prefixTable('simple_ab_testing_experiments') . " WHERE idsite = ?", [$idSite]);
 
         $experiments = [];

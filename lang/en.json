@@ -11,6 +11,9 @@
         "ABTesting": "AB Testing",
         "ABVariant": "ABVariant",
         "ABVisitor": "ABVisitor",
-        "SimpleAbTesting": "SimpleAbTesting"
+        "SimpleAbTesting": "SimpleAbTesting",
+        "SimpleABTestingCount": "SimpleABTestingCount",
+        "Title": "SimpleABTesting",
+        "ExperimentName": "Experiment name"
     }
 }
