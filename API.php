@@ -25,13 +25,13 @@ class API extends \Piwik\Plugin\API
     /**
      * Add an experiment
      */
-    public function insertExperiment($idSite, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs, $customDimension): void
+    public function insertExperiment($idSite, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs): void
     {
 
       Piwik::checkUserHasSomeAdminAccess();
       $query = "INSERT INTO `" . Common::prefixTable('simple_ab_testing_experiments') .
-                 "` (idsite, name, hypothesis, description, from_date, to_date, css_insert, js_insert, custom_dimension) " .
-                 "VALUES (?,?,?,?,?,?,?,?,?)";
+                 "` (idsite, name, hypothesis, description, from_date, to_date, css_insert, js_insert) " .
+                 "VALUES (?,?,?,?,?,?,?,?)";
       $params = [
             $idSite,
             $name,
@@ -40,8 +40,7 @@ class API extends \Piwik\Plugin\API
             $fromDate,
             $toDate,
             $cssInsert,
-            $customJs,
-            $customDimension
+            $customJs
       ];
       try {
             $db = $this->getDb();

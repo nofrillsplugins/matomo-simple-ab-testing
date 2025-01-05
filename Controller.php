@@ -47,7 +47,6 @@ class Controller extends \Piwik\Plugin\Controller
         $customJs = trim(Request::fromRequest()->getStringParameter('js_insert', 'string'));
         $idSite = trim(Request::fromRequest()->getIntegerParameter('idSite', 0));
         $redirectUrl = $_POST['redirect_url'] . "&message=Experiment%20Created";
-        $customDimension = trim(Request::fromRequest()->getStringParameter('custom_dimension', 'string'));
 
         $api = new API();
         $api->insertExperiment(
@@ -58,8 +57,7 @@ class Controller extends \Piwik\Plugin\Controller
             $fromDate,
             $toDate,
             $cssInsert,
-            $customJs,
-            $customDimension
+            $customJs
         );
         Url::redirectToUrl($redirectUrl);
     }

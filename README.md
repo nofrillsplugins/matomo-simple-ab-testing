@@ -2,7 +2,7 @@
 
 ## Description
 
-Simple A/B Testing is a plugin for Matomo to do simple A/B testing experiments with Matomo.
+Simple A/B Testing is a plugin for Matomo to do A/B testing experiments through Matomo.
 
 ## Dependencies
 
@@ -10,9 +10,12 @@ The plugin depends on Matomo Tag Manager, as the experiments are added as a Tag 
 
 ## Events
 
+The plugin sends events to Matomo:
+
 - Event category: "SimpleABTesting".
-- Event action: Experiment: NAME_OF_EXPERIMENT
-- Event names: original or variant (the experiment)
+- Event action: Experiment: NAME_OF_EXPERIMENT.
+- Event names: original or variant (the experiment).
+- Event value: 1 (same for original and variant).
 
 ## Adding a new experiment
 
@@ -35,6 +38,13 @@ The plugin depends on Matomo Tag Manager, as the experiments are added as a Tag 
 ## Cookie
 
 The plugin sets a cookie prefixed with the "sabt_" and then the experiment name. If the experiment is named "redbutton", the cookie will be named `sabt_redbutton`. The cookie lives until the end of the experiment.
+
+## API
+
+You can add and delete experiments with Matomo API.
+
+- `SimpleABTesting.insertExperiment` (idSite, name, hypothesis, description, fromDate, toDate, cssInsert, customJs)
+- `SimpleABTesting.deleteExperiment` (id)
 
 ## Fork
 

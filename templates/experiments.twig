@@ -18,8 +18,6 @@
                     <th>To Date</th>
                     <th>Inserted CSS</th>
                     <th>Inserted JS</th>
-                    <th>Custom dimension ID</th>
-                    <th>To report</th>
                     <th>Delete</th>
                 </tr>
             </thead>
@@ -31,14 +29,6 @@
                     <td>{{ experiment.to_date }}</td>
                     <td>{{ experiment.css_insert }}</td>
                     <td>{{ experiment.js_insert }}</td>
-                    <td>{{ experiment.custom_dimension }}</td>
-                    <td>
-                        {% if experiment.report_url is not empty %}
-                            <a href="{{ experiment.report_url }}" target="_blank" class="btn">View report</a>
-                        {% else %}
-                            No custom dimension set yet
-                        {% endif %}
-                    </td>
                     <td>
                         <form method="post" action="{{ deleteUrl }}">
                             <input type="hidden" name="nonce" value="{{ nonce }}" >
