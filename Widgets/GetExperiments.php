@@ -23,7 +23,7 @@ use Piwik\Request;
  * To configure a widget simply call the corresponding methods as described in the API-Reference:
  * http://developer.piwik.org/api-reference/Piwik/Plugin\Widget
  */
-class GetABTesting extends Widget
+class GetExperiments extends Widget
 {
     use Helpers;
 
@@ -38,17 +38,17 @@ class GetABTesting extends Widget
         /**
          * Set the subcategory the widget belongs to. If a subcategory is set, the widget will be shown in the UI.
          */
-        $config->setSubcategoryId('SimpleABTesting_CreateNewExperiment');
+        $config->setSubcategoryId('SimpleABTesting_ExistingExperiments');
 
         /**
          * Set the name of the widget belongs to.
          */
-        $config->setName('SimpleABTesting_CreateNewExperiment');
+        $config->setName('ExistingExperiments');
 
         /**
          * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
          */
-        $config->setOrder(90);
+        $config->setOrder(91);
         $config->setIsEnabled(\Piwik\Piwik::hasUserSuperUserAccess());
     }
 
@@ -116,6 +116,6 @@ class GetABTesting extends Widget
 
         $domain = $this->getSiteDomainFromId($idSite);
 
-        return $this->renderTemplate('index', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
+        return $this->renderTemplate('experiments', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
     }
 }

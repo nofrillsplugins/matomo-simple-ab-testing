@@ -1,0 +1,67 @@
+<style type="text/css">
+.btn-danger { background: darkred !important; }
+.btn { margin-bottom: 3px;}
+</style>
+
+<h1>Simple A/B Testing</h1>
+
+{% if message is not empty %}
+<div class="alert">
+    {{ message }}
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-content">
+        <h2>Existing Experiments</h2>
+        {% if experiments is not empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>URL Regex</th>
+                    <th>Inserted CSS</th>
+                    <th>Inserted JS</th>
+                    <th>Custom dimension ID</th>
+                    <th>To report</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for experiment in experiments %}
+                <tr>
+                    <td>{{ experiment.name }}</td>
+                    <td>{{ experiment.from_date }}</td>
+                    <td>{{ experiment.to_date }}</td>
+                    <td>{{ experiment.url_regex }}</td>
+                    <td>{{ experiment.css_insert }}</td>
+                    <td>{{ experiment.js_insert }}</td>
+                    <td>{{ experiment.custom_dimension }}</td>
+                    <td>
+                        {% if experiment.report_url is not empty %}
+                            <a href="{{ experiment.report_url }}" target="_blank" class="btn">View report</a>
+                        {% else %}
+                            No custom dimension set yet
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ deleteUrl }}">
+                            <input type="hidden" name="nonce" value="{{ nonce }}" >
+                            <input type="hidden" name="redirect_url" value="{{ currentUrl }}&message=Deleted%20experiment%20{{ experiment.name }}">
+                            <input type="hidden" name="id" value="{{ experiment.id }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert">
+            Start adding some experiments above :-)
+        </div>
+        {% endif %}
+    </div>
+</div>
