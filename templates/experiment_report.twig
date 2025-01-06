@@ -1,0 +1,24 @@
+{% block content %}
+  <h2>{{ title }}</h2>
+
+  <div class="card">
+  <table class="dataTable table table-striped">
+      <thead>
+          <tr>
+              <th>Experiment</th>
+              <th>Is Variant?</th>
+              <th>Number of Visits</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for row in data %}
+          <tr>
+              <td>{{ row.Experiment }}</td>
+              <td>{{ row.IsVariant }}</td>
+              <td>{{ row.NbVisits }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

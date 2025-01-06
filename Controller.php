@@ -15,6 +15,8 @@ use Piwik\Url;
 use Piwik\Plugins\SimpleABTesting\API;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 use Piwik\Request;
+use Piwik\View;
+use Piwik\Db;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -86,5 +88,25 @@ class Controller extends \Piwik\Plugin\Controller
             echo "Not allowed. You can go to the <a href='/'>Dashboard / Home</a>.";
             exit();
         }
+    }
+
+    public function getExperimentReport()
+    {
+        $view = new View('@SimpleABTesting/experiment_report');
+        $sql = "
+            SELECT
+                sabt_experiment_name AS Experiment,
+                sabt_is_variant AS IsVariant,
+                COUNT(*) AS NbVisits
+            FROM matomo_log_visit
+            WHERE sabt_experiment_name IS NOT NULL
+            GROUP BY sabt_experiment_name, sabt_is_variant
+        ";
+
+        $data = Db::fetchAll($sql);
+        $view->title = 'Experiment Report';
+        $view->data = $data;
+
+        return $view->render();
     }
 }

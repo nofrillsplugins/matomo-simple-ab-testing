@@ -21,37 +21,10 @@ class ExperimentsCount extends VisitDimension
      * This will be the name of the column in the log_visit table if a $columnType is specified.
      * @var string
      */
-    protected $columnName = 'sabt_experiments_count';
-
-    /**
-     * If a columnType is defined, we will create this a column in the MySQL table having this type. Please make sure
-     * MySQL will understand this type. Once you change the column type the Piwik platform will notify the user to
-     * perform an update which can sometimes take a long time so be careful when choosing the correct column type.
-     * @var string
-     */
-    protected $columnType = 'INTEGER(11) DEFAULT 0 NULL';
-
-    /**
-     * The type of the dimension is automatically detected by the columnType. If the type of the dimension is not
-     * detected correctly, you may want to adjust the type manually. The configured type will affect how the dimension
-     * is formatted in the UI.
-     * @var string
-     */
-    // protected $type = self::TYPE_NUMBER;
-
-    /**
-     * The name of the dimension which will be visible for instance in the UI of a related report and in the mobile app.
-     * @return string
-     */
+    protected $columnName = 'sabt_is_variant';
+    protected $columnType = 'TINYINT(1) DEFAULT 0 NULL';
     protected $nameSingular = 'SimpleABTesting_ExperimentsCount';
-
-    /**
-     * By defining a segment a user will be able to filter their visitors by this column. For instance
-     * show all reports only considering users having more than 10 achievement points. If you do not want to define a
-     * segment for this dimension, simply leave the name empty.
-     */
     protected $segmentName = 'achievementPoints';
-
     protected $acceptValues = 'Here you should explain which values are accepted/useful for segments: Any number, for instance 1, 2, 3 , 99';
 
     /**
@@ -68,19 +41,11 @@ class ExperimentsCount extends VisitDimension
     public function onNewVisit(Request $request, Visitor $visitor, $action)
     {
         $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
-        if (!empty($paramValue)) {
-            return $paramValue;
+        if (isset($paramValue)) {
+            return (int)$paramValue;
         }
+        return 0;
 
-        if (empty($action)) {
-            return 0;
-        }
-
-        return 1;
-
-        // you could also easily save any custom tracking url parameters
-        // return Common::getRequestVar('myCustomTrackingParam', 'default', 'string', $request->getParams());
-        // return Common::getRequestVar('linuxversion', false, 'string', $request->getParams());
     }
 
     /**
@@ -96,16 +61,7 @@ class ExperimentsCount extends VisitDimension
      */
     public function onExistingVisit(Request $request, Visitor $visitor, $action)
     {
-        $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
-        if (!empty($paramValue)) {
-            return $paramValue;
-        }
-
-        if (empty($action)) {
-            return false; // Do not change an already persisted value
-        }
-
-        return $visitor->getVisitorColumn($this->columnName) + 1;
+        return 0;
     }
 
     /**
@@ -120,10 +76,10 @@ class ExperimentsCount extends VisitDimension
      *
      * @return mixed|false
      */
-    public function onConvertedVisit(Request $request, Visitor $visitor, $action)
-    {
-        return $visitor->getVisitorColumn($this->columnName) + 5;  // give this visitor 5 extra achievement points
-    }
+    // public function onConvertedVisit(Request $request, Visitor $visitor, $action)
+    // {
+    //     return $visitor->getVisitorColumn($this->columnName) + 5;  // give this visitor 5 extra achievement points
+    // }
 
     /**
      * By implementing this event you can persist a value to the log_conversion table in case a conversion happens.
@@ -143,15 +99,5 @@ class ExperimentsCount extends VisitDimension
     }
      */
 
-    /**
-     * Sometimes you may want to make sure another dimension is executed before your dimension so you can persist
-     * a value depending on the value of other dimensions. You can do this by defining an array of dimension names.
-     * If you access any value of any other column within your events, you should require them here. Otherwise those
-     * values may not be available.
-     * @return array
-    public function getRequiredVisitFields()
-    {
-        return array('idsite', 'server_time');
-    }
-    */
+
 }
