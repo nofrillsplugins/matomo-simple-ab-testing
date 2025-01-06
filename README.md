@@ -34,6 +34,12 @@ The plugin sends events to Matomo:
 7. Publish the change of your container.
 8. Test it!
 
+## Reports
+
+We are still working on for getting reports into the plugin. For now, you could get some clue what is going on while checking into events.
+
+![Events report](assets/events-report.png "Events in Matomo")
+
 ## Cookie
 
 The plugin sets a cookie prefixed with the "sabt_" and then the experiment name. If the experiment is named "redbutton", the cookie will be named `sabt_redbutton`. The cookie lives until the end of the experiment.
