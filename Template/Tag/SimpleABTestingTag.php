@@ -30,7 +30,6 @@ class SimpleABTestingTag extends BaseTag
     public function getParameters()
     {
 
-
         return array(
             $this->makeSetting('experiment', '', FieldConfig::TYPE_STRING, function (FieldConfig $field) {
                 $field->title = Piwik::translate('SimpleABTesting_TagChooseExperiment');
@@ -50,10 +49,10 @@ class SimpleABTestingTag extends BaseTag
 
     private function getExperiments()
     {
-        $sql = "SELECT id, name, from_date, to_date, css_insert, js_insert, custom_dimension FROM " . Common::prefixTable('simple_ab_testing_experiments');
+        $sql = "SELECT id, name, from_date, to_date, css_insert, js_insert FROM " . Common::prefixTable('simple_ab_testing_experiments');
         $result = Db::fetchAll($sql);
 
-        $options = []; // Initialize the array to store experiment data
+        $options = [];
         foreach ($result as $experiment) {
             $cssInsert = urlencode($experiment['css_insert']);
             $jsInsert = urlencode($experiment['js_insert']);
@@ -63,8 +62,7 @@ class SimpleABTestingTag extends BaseTag
                 . $experiment['from_date'] . ','
                 . $experiment['to_date'] . ','
                 . $cssInsert . ','
-                . $jsInsert . ','
-                . $experiment['custom_dimension'];
+                . $jsInsert . ',';
 
             // Use the experiment name as the key and values as the value
             $options[$values] = $experiment['name'];

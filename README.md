@@ -22,7 +22,6 @@ The plugin sends events to Matomo:
 1. From Dashboard -> Simple A/B Testing -> Create a new experiment.
 2. Set a name for the experiment.
 3. Insert custom CSS or JS for the variant.
-4. Specify a Custom Dimension (a Visit Dimension) for the experiment.
 
 ## Activate the experiment
 
@@ -45,6 +44,10 @@ You can add and delete experiments with Matomo API.
 
 - `SimpleABTesting.insertExperiment` (idSite, name, hypothesis, description, fromDate, toDate, cssInsert, customJs)
 - `SimpleABTesting.deleteExperiment` (id)
+
+## GDPR and personally identifiable information
+
+Out of the box, this plugin does not store any personal information. With that said, with using JavaScript within an experiment, personal data could be stored somewhere else.
 
 ## Fork
 

@@ -9,14 +9,13 @@
           const stop = parts[2] + "T23:59:00Z";
           const css = decodeURIComponent(parts[3].replace(/\+/g, "%20"));
           const js = decodeURIComponent(parts[4].replace(/\+/g, "%20"));
-          const dimension = parts[5];
           const _paq = (window._paq = window._paq || []);
           const VARIANT_ORIGINAL = "0";
           const VARIANT_TEST = "1";
 
-          initExp(_paq, name, start, stop, js, css, dimension, original_name);
+          initExp(_paq, name, start, stop, js, css, original_name);
 
-          function initExp(_paq, testName, testStartDate, testEndDate, scriptText, cssText, customDimension, originalName) {
+          function initExp(_paq, testName, testStartDate, testEndDate, scriptText, cssText, originalName) {
               let currentVariant = getCookie(testName);
               const currentDate = new Date();
               const startDate = new Date(testStartDate);

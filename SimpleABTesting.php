@@ -21,7 +21,6 @@ class SimpleABTesting extends \Piwik\Plugin
                     `to_date` date NOT NULL,
                     `css_insert` text,
                     `js_insert` text,
-                    `custom_dimension` int(11) NOT NULL,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `unique_name` (`name`)
                     )  DEFAULT CHARSET=utf8 ";

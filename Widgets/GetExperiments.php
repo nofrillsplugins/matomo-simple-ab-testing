@@ -70,16 +70,6 @@ class GetExperiments extends Widget
             $experiments[$n] = $exp;
             $experiments[$n]['css_insert'] = Common::unsanitizeInputValues($exp['css_insert']);
             $experiments[$n]['js_insert'] = Common::unsanitizeInputValues($exp['js_insert']);
-
-            if (!empty($exp['custom_dimension'])) {
-                $customDimensionsUrl = $this->getCustomUrl(
-                    'day',
-                    $exp['from_date'],
-                    'General_Visitors',
-                    'customdimension' . $exp['custom_dimension']
-                );
-                $experiments[$n]['report_url'] = $customDimensionsUrl;
-            }
         }
 
         $currentUrl = '//' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -109,7 +99,6 @@ class GetExperiments extends Widget
         $baseHost = $this->getHost($baseUrl);
 
         $currentUrl = $this->getCustomUrl();
-        $customDimensionsUrl = $this->getCustomDimensionsUrl();
 
         $message = trim(Request::fromRequest()->getStringParameter('message', ''));
 
@@ -117,6 +106,6 @@ class GetExperiments extends Widget
 
         $domain = $this->getSiteDomainFromId($idSite);
 
-        return $this->renderTemplate('experiments', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'customDimensionsUrl', 'nonce'));
+        return $this->renderTemplate('experiments', compact('experiments', 'message', 'baseHost', 'domain', 'actionUrl', 'formattedToday', 'formattedOneMonthLater', 'currentUrl', 'refreshUrl', 'deleteUrl', 'nonce'));
     }
 }

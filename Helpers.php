@@ -31,22 +31,6 @@ trait Helpers
                '&category=' . $category . '&subcategory=' . $subcategory . '&date=' . $date;
     }
 
-    private function getCustomDimensionsUrl()
-    {
-        $baseUrl = Url::getCurrentUrlWithoutFileName();
-        $idSite = Common::getRequestVar('idSite', 1, 'int');
-
-        $params = [
-            'module' => 'CustomDimensions',
-            'action' => 'manage',
-            'idSite' => $idSite,
-            'period' => 'day',
-            'date' => 'today'
-        ];
-
-        return $baseUrl . 'index.php?' . http_build_query($params);
-    }
-
     private function getHost($url)
     {
         $url = str_replace("https://", "", $url);

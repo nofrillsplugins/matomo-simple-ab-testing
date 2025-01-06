@@ -8,6 +8,7 @@
  */
 
 namespace Piwik\Plugins\SimpleABTesting;
+
 use Piwik\Common;
 use Piwik\Piwik;
 use Piwik\Db;
@@ -21,18 +22,17 @@ use Exception;
  */
 class API extends \Piwik\Plugin\API
 {
-
     /**
      * Add an experiment
      */
     public function insertExperiment($idSite, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs): void
     {
 
-      Piwik::checkUserHasSomeAdminAccess();
-      $query = "INSERT INTO `" . Common::prefixTable('simple_ab_testing_experiments') .
+        Piwik::checkUserHasSomeAdminAccess();
+        $query = "INSERT INTO `" . Common::prefixTable('simple_ab_testing_experiments') .
                  "` (idsite, name, hypothesis, description, from_date, to_date, css_insert, js_insert) " .
                  "VALUES (?,?,?,?,?,?,?,?)";
-      $params = [
+        $params = [
             $idSite,
             $name,
             $hypothesis,
@@ -41,26 +41,25 @@ class API extends \Piwik\Plugin\API
             $toDate,
             $cssInsert,
             $customJs
-      ];
-      try {
+        ];
+        try {
             $db = $this->getDb();
             $db->query($query, $params);
-      } catch (Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     public function deleteExperiment($id): void
     {
-      $query = "DELETE FROM `" . Common::prefixTable('simple_ab_testing_experiments') . "` WHERE id = ?";
-      $params = [$id];
-      try {
-        $db = $this->getDb();
-        $db->query($query, $params);
-      } catch (Exception $e) {
+        $query = "DELETE FROM `" . Common::prefixTable('simple_ab_testing_experiments') . "` WHERE id = ?";
+        $params = [$id];
+        try {
+            $db = $this->getDb();
+            $db->query($query, $params);
+        } catch (Exception $e) {
             throw $e;
         }
-
     }
 
 
