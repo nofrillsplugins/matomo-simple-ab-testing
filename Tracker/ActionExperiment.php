@@ -35,8 +35,8 @@ class ActionExperiment extends Action
 
     protected function getActionsToLookup()
     {
-      $this->logger->warning("Getting a request in getActionsToLookup");
-      return [];
+        $this->logger->warning("Getting a request in getActionsToLookup");
+        return [];
     }
     public static function getEventValue(Request $request)
     {

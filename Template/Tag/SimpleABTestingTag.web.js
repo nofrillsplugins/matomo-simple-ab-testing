@@ -33,12 +33,12 @@
                           insertJS(scriptText);
                           // Testing to use track event for tests.
                           // We need a way to catch these with a dimension in the plugin though.
-                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'variant', '2']);
+                          //window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'variant', '2']);
                       } catch (e) {
                           console.error("Error in script execution", e);
                       }
                   } else {
-                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'original', '1']);
+                      //window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'original', '1']);
                   }
               }
           }

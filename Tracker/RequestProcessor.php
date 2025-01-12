@@ -8,11 +8,13 @@ use Piwik\Tracker\Visit\VisitProperties;
 use Piwik\Log\LoggerInterface;
 use Piwik\Plugins\SimpleABTesting\Dao\LogExperiment;
 use Piwik\Tracker\RequestProcessor as MatomoRequestProcessor;
+use Piwik\Common;
+use Piwik\Db;
 
 class RequestProcessor extends MatomoRequestProcessor
 {
-    const TRACK_SABT = 'sabt';
-    const TRACK_EXPERIMENT = 'experiment';
+    public const TRACK_SABT = 'sabt';
+    public const TRACK_EXPERIMENT = 'experiment';
 
     /**
      * @var LogExperiment
@@ -33,22 +35,30 @@ class RequestProcessor extends MatomoRequestProcessor
 
     public function onExistingVisit(&$valuesToUpdate, VisitProperties $visitProperties, Request $request)
     {
-        // $params = $request->getParams();
-        // $this->logger->warning("Getting a request in onExistingVisit");
 
+        // @todo: add logic to update visits.
     }
 
     public function recordLogs(VisitProperties $visitProperties, Request $request)
     {
-        $this->logger->warning("Getting a request in recordLogs");
+
         $params = $request->getParams();
         if (empty($params[self::TRACK_SABT])) {
             return;
         }
 
-        $message = $params[self::TRACK_SABT];
-       // $request->getIdSite();
-
+        $props = [
+          'idsite' => $request->getIdSite(),
+          'experiment_name' => $params[self::TRACK_EXPERIMENT] ?? 'Unknown',
+          'variant' => $params[self::TRACK_SABT] ?? 0,
+          'idvisit' => $visitProperties->getProperty('idvisit'),
+          'idvisitor' => $visitProperties->getProperty('idvisitor'),
+          'server_time' => date('Y-m-d H:i:s', $request->getCurrentTimestamp()),
+          'created_time' => date('Y-m-d H:i:s', time()),
+          'category' => 'Experiment',
+          'idaction_url' => $visitProperties->getProperty('visit_exit_idaction_url') ?? $visitProperties->getProperty('visit_entry_idaction_url'),
+          'idaction_name' => $visitProperties->getProperty('visit_exit_idaction_name') ?? $visitProperties->getProperty('visit_entry_idaction_name'),
+        ];
+        $this->logExperiment->createLog($props);
     }
-
 }

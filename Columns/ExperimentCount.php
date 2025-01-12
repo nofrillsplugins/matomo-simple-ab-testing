@@ -53,7 +53,6 @@ class ExperimentCount extends Dimension
             return 1;
         }
         return 0;
-
     }
 
     /**
@@ -76,7 +75,6 @@ class ExperimentCount extends Dimension
         if (empty($action)) {
             return false; // Do not change an already persisted value
         }
-
     }
 
     /**
@@ -113,6 +111,4 @@ class ExperimentCount extends Dimension
         return $visitor->getVisitorColumn($this->columnName);
     }
      */
-
-
 }

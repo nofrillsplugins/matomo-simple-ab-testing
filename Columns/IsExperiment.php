@@ -53,7 +53,6 @@ class IsExperiment extends Dimension
             return $paramValue;
         }
         return 0;
-
     }
 
     /**
@@ -110,6 +109,4 @@ class IsExperiment extends Dimension
         return $visitor->getVisitorColumn($this->columnName);
     }
      */
-
-
 }

@@ -8,7 +8,6 @@ use Piwik\Columns\Dimension;
 
 class ExperimentName extends Dimension
 {
-
     protected $columnName = 'experiment_name';
     protected $columnType = 'VARCHAR(255) NULL';
     protected $nameSingular = 'SimpleABTesting_Experiment';

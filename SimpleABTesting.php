@@ -31,15 +31,14 @@ class SimpleABTesting extends Plugin
                     UNIQUE KEY `unique_name` (`name`)
                     )  DEFAULT CHARSET=utf8 ";
             Db::exec($sql);
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // ignore error if table already exists (1050 code is for 'table already exists')
             if (!Db::get()->isErrNo($e, '1050')) {
                 throw $e;
             }
         }
         try {
-        $sql = "CREATE TABLE " . Common::prefixTable('simple_ab_testing_log') . " (
+            $sql = "CREATE TABLE " . Common::prefixTable('simple_ab_testing_log') . " (
         `idlog` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
         `idsite` INT UNSIGNED NOT NULL,
         `idvisit` BIGINT(10) UNSIGNED NOT NULL,
@@ -49,15 +48,13 @@ class SimpleABTesting extends Plugin
         `variant` INT DEFAULT NULL NULL,
         `server_time` DATETIME NOT NULL,
         `created_time` DATETIME NOT NULL,
-        `idpageview` CHAR(6) NULL DEFAULT NULL,
         `idaction_url` INTEGER UNSIGNED NULL,
         `idaction_name` INTEGER UNSIGNED NULL,
         `category` VARCHAR(255) NOT NULL DEFAULT '',
         PRIMARY KEY (`idlog`)
         )  DEFAULT CHARSET=utf8 ";
-        Db::exec($sql);
-        }
-        catch (Exception $e) {
+            Db::exec($sql);
+        } catch (Exception $e) {
             // ignore error if table already exists (1050 code is for 'table already exists')
             if (!Db::get()->isErrNo($e, '1050')) {
                 throw $e;
