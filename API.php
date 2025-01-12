@@ -13,6 +13,8 @@ use Piwik\Common;
 use Piwik\Piwik;
 use Piwik\Db;
 use Exception;
+use Piwik\Plugins\SimpleABTesting\Dao\Experiments;
+use Piwik\Container\StaticContainer;
 
 /**
  * API for plugin RebelNotifications. With this you can handle notifications to
@@ -23,48 +25,26 @@ use Exception;
 class API extends \Piwik\Plugin\API
 {
     /**
+     * @var Experiments
+     */
+    private $experiments;
+
+    public function __construct()
+    {
+        $this->experiments = StaticContainer::get(Experiments::class);
+    }
+    /**
      * Add an experiment
      */
     public function insertExperiment(bool $idSite, string $name, string $hypothesis, string $description, string $fromDate, string $toDate, string $cssInsert, string $customJs): void
     {
-
         Piwik::checkUserHasSomeAdminAccess();
-        $query = "INSERT INTO `" . Common::prefixTable('simple_ab_testing_experiments') .
-                 "` (idsite, name, hypothesis, description, from_date, to_date, css_insert, js_insert) " .
-                 "VALUES (?,?,?,?,?,?,?,?)";
-        $params = [
-            $idSite,
-            $name,
-            $hypothesis,
-            $description,
-            $fromDate,
-            $toDate,
-            $cssInsert,
-            $customJs
-        ];
-        try {
-            $db = $this->getDb();
-            $db->query($query, $params);
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $this->experiments->insertExperiment($idSite, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs);
     }
 
     public function deleteExperiment(bool $id): void
     {
-        $query = "DELETE FROM `" . Common::prefixTable('simple_ab_testing_experiments') . "` WHERE id = ?";
-        $params = [$id];
-        try {
-            $db = $this->getDb();
-            $db->query($query, $params);
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
-
-
-    private function getDb()
-    {
-        return Db::get();
+        Piwik::checkUserHasSomeAdminAccess();
+        $this->experiments->deleteExperiment($id);
     }
 }
