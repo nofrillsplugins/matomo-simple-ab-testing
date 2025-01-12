@@ -10,8 +10,8 @@
           const css = decodeURIComponent(parts[3].replace(/\+/g, "%20"));
           const js = decodeURIComponent(parts[4].replace(/\+/g, "%20"));
           const _paq = (window._paq = window._paq || []);
-          const VARIANT_ORIGINAL = "0";
-          const VARIANT_TEST = "1";
+          const ORIGINAL = "1";
+          const VARIANT = "2";
 
           initExp(_paq, name, start, stop, js, css, original_name);
 
@@ -24,21 +24,21 @@
               if (currentDate >= startDate && currentDate <= endDate) {
                   if (!currentVariant) {
                       // Randomly assign original or variant.
-                      currentVariant = Math.random() < 0.5 ? VARIANT_ORIGINAL : VARIANT_TEST;
+                      currentVariant = Math.random() < 0.5 ? ORIGINAL : VARIANT;
                       setCookie(testName, currentVariant, testEndDate);
                   }
-                  if (currentVariant === VARIANT_TEST) {
+                  if (currentVariant === VARIANT) {
                       try {
                           insertCSS(cssText);
                           insertJS(scriptText);
                           // Testing to use track event for tests.
                           // We need a way to catch these with a dimension in the plugin though.
-                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'variant', '1']);
+                          window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'variant', '2']);
                       } catch (e) {
                           console.error("Error in script execution", e);
                       }
                   } else {
-                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment: " + originalName, 'original', '1']);
+                      window._paq.push(["trackEvent", "SimpleABTesting", "Experiment name: " + originalName, 'original', '1']);
                   }
               }
           }

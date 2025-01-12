@@ -10,21 +10,29 @@
 namespace Piwik\Plugins\SimpleABTesting\Columns;
 
 use Piwik\Common;
-use Piwik\Plugin\Dimension\VisitDimension;
+use Piwik\Columns\Dimension;
 use Piwik\Tracker\Request;
 use Piwik\Tracker\Visitor;
 use Piwik\Tracker\Action;
 
-class ExperimentsCount extends VisitDimension
+class ExperimentCount extends Dimension
 {
     /**
      * This will be the name of the column in the log_visit table if a $columnType is specified.
      * @var string
      */
-    protected $columnName = 'sabt_is_variant';
-    protected $columnType = 'TINYINT(1) DEFAULT 0 NULL';
-    protected $nameSingular = 'SimpleABTesting_ExperimentsCount';
-    protected $segmentName = 'achievementPoints';
+    protected $columnName = 'count';
+    protected $columnType = 'INT DEFAULT NULL NULL';
+    protected $nameSingular = 'SimpleABTesting_ExperimentCount';
+    protected $namePlural = 'SimpleABTesting_ExperimentCounts';
+    protected $dbTableName = 'simple_ab_testing_log';
+    protected $category = 'SimpleABTesting_ExperimentCounts';
+    protected $sqlSegment = 'simple_ab_testing_log.idlog';
+    protected $segmentName = 'experimentId';
+
+    /**
+     * @var string
+     */
     protected $acceptValues = 'Here you should explain which values are accepted/useful for segments: Any number, for instance 1, 2, 3 , 99';
 
     /**
@@ -42,7 +50,7 @@ class ExperimentsCount extends VisitDimension
     {
         $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
         if (isset($paramValue)) {
-            return (int)$paramValue;
+            return 1;
         }
         return 0;
 
@@ -61,7 +69,14 @@ class ExperimentsCount extends VisitDimension
      */
     public function onExistingVisit(Request $request, Visitor $visitor, $action)
     {
-        return 0;
+        $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
+        if (isset($paramValue)) {
+            return $visitor->getVisitorColumn($this->columnName) + 1;
+        }
+        if (empty($action)) {
+            return false; // Do not change an already persisted value
+        }
+
     }
 
     /**

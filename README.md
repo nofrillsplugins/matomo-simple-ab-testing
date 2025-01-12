@@ -15,7 +15,7 @@ The plugin sends events to Matomo:
 - Event category: "SimpleABTesting".
 - Event action: Experiment: NAME_OF_EXPERIMENT.
 - Event names: original or variant (the experiment).
-- Event value: 1 (same for original and variant).
+- Event value: 1 or 2 (original or variant).
 
 ## Adding a new experiment
 

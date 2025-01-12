@@ -1,20 +1,33 @@
 {% block content %}
+
+<style type="text/css">
+    table.dataTable thead tr th:not(.label) {
+        text-align: left;
+    }
+    </style>
   <h2>{{ title }}</h2>
 
   <div class="card">
   <table class="dataTable table table-striped">
       <thead>
           <tr>
+              <th>Idvisit</th>
               <th>Experiment</th>
-              <th>Is Variant?</th>
+              <th>Version</th>
               <th>Number of Visits</th>
           </tr>
       </thead>
       <tbody>
           {% for row in data %}
           <tr>
+              <td>{{ row.idvisit }}</td>
               <td>{{ row.Experiment }}</td>
-              <td>{{ row.IsVariant }}</td>
+              <td>{% if row.IsVariant == "1" %}
+                Original
+            {% elseif row.IsVariant == "2" %}
+               Variant {{ (row.IsVariant|number|default(0)) - 1 }}
+            {% endif %}
+             </td>
               <td>{{ row.NbVisits }}</td>
           </tr>
           {% endfor %}

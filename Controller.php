@@ -95,12 +95,13 @@ class Controller extends \Piwik\Plugin\Controller
         $view = new View('@SimpleABTesting/experiment_report');
         $sql = "
             SELECT
+                idvisit,
                 sabt_experiment_name AS Experiment,
                 sabt_is_variant AS IsVariant,
-                COUNT(*) AS NbVisits
+                sabt_count AS NbVisits
             FROM matomo_log_visit
             WHERE sabt_experiment_name IS NOT NULL
-            GROUP BY sabt_experiment_name, sabt_is_variant
+            GROUP BY idvisit, sabt_experiment_name, sabt_is_variant
         ";
 
         $data = Db::fetchAll($sql);

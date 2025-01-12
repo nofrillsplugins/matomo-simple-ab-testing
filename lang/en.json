@@ -15,6 +15,7 @@
         "SimpleABTestingCount": "SimpleABTestingCount",
         "Title": "SimpleABTesting",
         "ExperimentName": "Experiment name",
-        "ExperimentsCount": "ExperimentsCount"
+        "ExperimentsCount": "ExperimentsCount",
+        "Report": "Report"
     }
 }

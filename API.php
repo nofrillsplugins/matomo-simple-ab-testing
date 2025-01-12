@@ -25,7 +25,7 @@ class API extends \Piwik\Plugin\API
     /**
      * Add an experiment
      */
-    public function insertExperiment($idSite, $name, $hypothesis, $description, $fromDate, $toDate, $cssInsert, $customJs): void
+    public function insertExperiment(bool $idSite, string $name, string $hypothesis, string $description, string $fromDate, string $toDate, string $cssInsert, string $customJs): void
     {
 
         Piwik::checkUserHasSomeAdminAccess();
@@ -50,7 +50,7 @@ class API extends \Piwik\Plugin\API
         }
     }
 
-    public function deleteExperiment($id): void
+    public function deleteExperiment(bool $id): void
     {
         $query = "DELETE FROM `" . Common::prefixTable('simple_ab_testing_experiments') . "` WHERE id = ?";
         $params = [$id];
