@@ -3,27 +3,54 @@
 namespace Piwik\Plugins\SimpleABTesting\Dao;
 
 use Piwik\Common;
-use Piwik\Date;
 use Piwik\Db;
-use Piwik\DbHelper;
+use Exception;
 
 class LogExperiment
 {
+    public function install()
+    {
+        try {
+            $sql = "CREATE TABLE " . Common::prefixTable('simple_ab_testing_log') . " (
+        `idlog` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        `idsite` INT UNSIGNED NOT NULL,
+        `idvisit` BIGINT(10) UNSIGNED NOT NULL,
+        `idvisitor` BINARY(8) NOT NULL,
+        `count` INT DEFAULT NULL NULL,
+        `experiment_name` VARCHAR(255) NULL,
+        `variant` INT DEFAULT NULL NULL,
+        `server_time` DATETIME NOT NULL,
+        `created_time` DATETIME NOT NULL,
+        `idaction_url` INTEGER UNSIGNED NULL,
+        `idaction_name` INTEGER UNSIGNED NULL,
+        `category` VARCHAR(255) NOT NULL DEFAULT '',
+        PRIMARY KEY (`idlog`)
+        )  DEFAULT CHARSET=utf8 ";
+            Db::exec($sql);
+        } catch (Exception $e) {
+            // ignore error if table already exists (1050 code is for 'table already exists')
+            if (!Db::get()->isErrNo($e, '1050')) {
+                throw $e;
+            }
+        }
+    }
+
     public function createLog($parameters)
     {
-    // Map array keys to column names and placeholders
-        $columns = array_keys($parameters); // Get all keys for the column names
-        $placeholders = array_map(fn($key) => ':' . $key, $columns); // Create named placeholders (:idsite, :experiment_name, etc.)
-
-    // Construct the SQL query dynamically
+        // Map array keys to column names and placeholders
+        $columns = array_keys($parameters);
+        $placeHolders = array_map(fn($key) => ':' . $key, $columns);
         $sql = sprintf(
             "INSERT INTO %s (%s) VALUES (%s)",
-            Common::prefixTable('simple_ab_testing_log'),     // Table name
-            implode(', ', $columns),                         // Columns (e.g., idsite, experiment_name, ...)
-            implode(', ', $placeholders)                     // Corresponding placeholders (e.g., :idsite, :experiment_name, ...)
+            Common::prefixTable('simple_ab_testing_log'),
+            implode(', ', $columns),
+            implode(', ', $placeHolders)
         );
+        Db::query($sql, $parameters);
+    }
 
-    // Execute the database query with the array values
-        Db::query($sql, $parameters); // Bind parameters using the $props array
+    public function uninstall()
+    {
+        Db::dropTables(Common::prefixTable('simple_ab_testing_log'));
     }
 }
