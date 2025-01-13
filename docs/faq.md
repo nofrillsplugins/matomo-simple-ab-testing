@@ -1,4 +1,4 @@
-## FAQ
+# FAQ
 
 __My question?__
 

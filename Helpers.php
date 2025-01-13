@@ -1,9 +1,11 @@
 <?php
+
 namespace Piwik\Plugins\SimpleABTesting;
 
 use Piwik\Common;
 use Piwik\Url;
 use Piwik\Site;
+use Piwik\Db;
 
 trait Helpers
 {
@@ -11,11 +13,11 @@ trait Helpers
     {
         $baseUrl = Url::getCurrentUrlWithoutFileName();
         $idSite = Common::getRequestVar('idSite', 1, 'int');
-        
+
         $period = $period ?? Common::getRequestVar('period');
         $date = $date ?? Common::getRequestVar('date');
 
-        $category = $category ?? 'SimpleABTesting_Tests';
+        $category = $category ?? 'SimpleABTesting_SimpleABTesting';
         $subcategory = $subcategory ?? 'General_Overview';
 
         $params = [
@@ -25,15 +27,16 @@ trait Helpers
             'period' => $period,
             'date' => $date,
         ];
-        
-        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) . '&category=' . $category .'&subcategory=' . $subcategory;
+
+        return $baseUrl . 'index.php?' . http_build_query($params) . '#' . http_build_query($params) .
+               '&category=' . $category . '&subcategory=' . $subcategory;
     }
 
     private function getCustomDimensionsUrl()
     {
         $baseUrl = Url::getCurrentUrlWithoutFileName();
         $idSite = Common::getRequestVar('idSite', 1, 'int');
-        
+
         $params = [
             'module' => 'CustomDimensions',
             'action' => 'manage',
@@ -41,7 +44,7 @@ trait Helpers
             'period' => 'day',
             'date' => 'today'
         ];
-        
+
         return $baseUrl . 'index.php?' . http_build_query($params);
     }
 
@@ -63,12 +66,17 @@ trait Helpers
 
     /**
      * Method that gets the domain, extracted from the main url, by id
-     * @param  int    $idSite 
+     * @param  int    $idSite
      * @return string The domain
      */
     private function getSiteDomainFromId($idSite)
     {
         $site = new Site($idSite);
         return str_replace("www.", "", str_replace("https://", "", str_replace("http://", "", $site->getMainUrl())));
+    }
+
+    private function getDb()
+    {
+        return Db::get();
     }
 }

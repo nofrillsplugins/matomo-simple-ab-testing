@@ -1,17 +1,12 @@
 <?php
+
 namespace Piwik\Plugins\SimpleABTesting;
 
-use Piwik\Menu\MenuTop;
-use Piwik\Piwik;
 use Piwik\Common;
-use Piwik\Plugin;
-use Piwik\View;
 use Piwik\Db;
-use Piwik\Log;
 
 class Generator extends \Piwik\Plugin
 {
-    
     public function regenerateJS()
     {
         foreach (\Piwik\Site::getSites() as $site) {
@@ -23,16 +18,16 @@ class Generator extends \Piwik\Plugin
             //Log::debug('pingDomain: ' . $domain);
             // Log::debug('pingSiteId: ' . $site['idsite']);
 
-            $experiments = \Piwik\Db::fetchAll("SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?", [$site['idsite']]);
+            $experiments = Db::fetchAll(
+                "SELECT * FROM " . Common::prefixTable('ab_tests') . " WHERE idsite = ?",
+                [$site['idsite']]
+            );
 
-            if (!empty($experiments))
-            {
+            if (!empty($experiments)) {
                 $this->generateJS($domain, $experiments);
-            }
-            else
-            {
+            } else {
                 // at least write an empty file
-                $this->createDomainJsFile($domain, "");   
+                $this->createDomainJsFile($domain, "");
             }
         }
     }
@@ -43,11 +38,9 @@ class Generator extends \Piwik\Plugin
 
         $js .= "var _paq = window._paq = window._paq || [];";
 
-        foreach ($experiments as $experiment)
-        {
+        foreach ($experiments as $experiment) {
             $regex = '""';
-            if (!empty($experiment['url_regex']))
-            {
+            if (!empty($experiment['url_regex'])) {
                 $regex = '/' . $experiment['url_regex'] . '/';
             }
 
@@ -61,7 +54,6 @@ class Generator extends \Piwik\Plugin
         $js = $this->minifyJS($js);
 
         $this->createDomainJsFile($domain, $js);
-
     }
 
     private function createDomainJsFile($domain, $customJs)
@@ -165,7 +157,8 @@ class Generator extends \Piwik\Plugin
         }";
     }
 
-    private function minifyJS($js) {
+    private function minifyJS($js)
+    {
         return preg_replace(
             [
                 // Remove multi-line comments
@@ -186,5 +179,4 @@ class Generator extends \Piwik\Plugin
             trim($js)
         );
     }
-    
 }
