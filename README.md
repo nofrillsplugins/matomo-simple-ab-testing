@@ -4,7 +4,7 @@
 
 Free A/B Testing plugin for Matomo.
 
-I created this as an alternative to Google Optimize, which was a free A/B testing tool, but ended end 2024.
+I created this as an alternative to Google Optimize, which was a free A/B testing tool, but ended end 2023.
 
 Unfortunately, barely any tools are free, let alone affordable.
 

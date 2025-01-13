@@ -46,12 +46,21 @@
                 <label for="css_insert">CSS insert (For variant 1) - the example code removes the h1 tag</label>
                 <textarea name="css_insert" id="css_insert" style="min-height: 200px;" placeholder="Example: .h1 { display: none }"> </textarea>
             <p>
-                <label for="js_insert">Custom JS (For variant 1) - the example code removes the h1 tag</label>
+                <label for="js_insert">Custom JS (For variant 1) - the example code removes the h1 tag - you might need to add a check if the DOM is loaded</label>
                 <textarea name="js_insert" id="js_insert" style="min-height: 200px;" placeholder="let h1 = document.querySelector('h1');
 
 if (h1) {
     h1.remove();
-}"></textarea>
+}
+
+// If you want to run the code after the DOM is loaded, you can use this:
+// document.addEventListener('DOMContentLoaded', function() {
+//     let h1 = document.querySelector('h1');
+//     if (h1) {
+//         h1.remove();
+//     }
+// });
+"></textarea>
             </p>
             <p>
                 <label for="custom_dimension">Use custom dimension id (e.g. 1,2,3,4,5). Make sure that they are <a href="{{ customDimensionsUrl }}">enabled here</a>. And that experiments don't overlap. Else it makes reporting more difficult.</label>
@@ -123,7 +132,7 @@ if (h1) {
 <div class="card">
     <div class="card-content">
         <h2>View results</h2>
-        <p>You can view the results by getting the custom dimensions reports and adjusting the right dates. You can click on the "view report" buttons above</p>
+        <p>You can view the results by getting the custom dimensions reports and adjusting the right dates. You can click on the "view report" buttons above. You can view the Goals Metrics by clicking on the Flag Icon in the report and clicking on "Display a table with Goals Metrics"</p>
         <h2>Statistical significance</h2>
         <a class="btn" href="https://www.devproblems.com/statistical-significance-calculator/" target="_blank">Calculate statistical significance</a>
     </div>
@@ -137,7 +146,7 @@ if (h1) {
         
         <div id="javascript-text">
           <div class="copyToClipboardWrapper">
-            <pre class="codeblock">&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=&lt;?= echo date(&#039;Y-m-D-H&#039;) ?&gt;&lt;/script&gt;</pre>
+            <pre class="codeblock">&lt;script type='text/javascript' src='//{{ baseHost }}plugins/SimpleABTesting/public/{{ domain }}.js?v=&lt;?= date(&#039;Y-m-D-H&#039;) ?&gt;'&gt;&lt;/script&gt;</pre>
             <div class="copyToClipboardPositionDiv">
               <button type="button" class="copyToClipboardButton" onclick="copyToClipboard(this)">
                 <i class="copyToClipboardIcon"></i>
@@ -149,6 +158,7 @@ if (h1) {
         </div>
 
         <h3>OPTION2: If you don't have PHP installed on the tracking domain</h3>
+        <p>Not all domains have PHP installed. If so, use this tag, but it might be that some <a href="https://www.nofrillsplugins.com/blog/matomo-simple-ab-testing-tags" target="_blank">slow connections will not include the A/B test</a>.</p>
         <p>Insert the following code BEFORE the Matomo tag. Else it doesn't work.</p>
         
         <div id="javascript-text">
