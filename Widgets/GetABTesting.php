@@ -26,7 +26,7 @@ class GetABTesting extends Widget
         $config->setCategoryId('SimpleABTesting_SimpleABTesting');
         $config->setSubcategoryId('SimpleABTesting_CreateNewExperiment');
         $config->setName('SimpleABTesting_CreateNewExperiment');
-        $config->setOrder(90);
+        $config->setOrder(97);
         $config->setIsEnabled(\Piwik\Piwik::isUserHasSomeAdminAccess());
     }
 

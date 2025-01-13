@@ -48,7 +48,7 @@ class GetInsertExperiment extends Widget
         /**
          * Set the order of the widget. The lower the number, the earlier the widget will be listed within a category.
          */
-        $config->setOrder(92);
+        $config->setOrder(99);
         $config->setIsEnabled(\Piwik\Piwik::isUserHasSomeAdminAccess());
     }
 

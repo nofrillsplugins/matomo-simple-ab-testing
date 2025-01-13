@@ -16,6 +16,10 @@
         "Title": "SimpleABTesting",
         "ExperimentName": "Experiment name",
         "ExperimentsCount": "ExperimentsCount",
-        "Report": "Report"
+        "Report": "Report",
+        "NbVisits": "Number of visits",
+        "NbUniqueVisitors": "Number of unique visitors",
+        "ExperimentsReport": "Experiments Report",
+        "ReportHelpText": "Put in help text here"
     }
 }

@@ -6,6 +6,7 @@ use Piwik\Plugin;
 use Piwik\Plugins\SimpleABTesting\Dao\LogExperiment;
 use Piwik\Plugins\SimpleABTesting\Dao\Experiments;
 use Piwik\Container\StaticContainer;
+use Piwik\Plugins\SimpleABTesting\Reports\GetExperimentReport;
 
 class SimpleABTesting extends Plugin
 {
@@ -40,5 +41,12 @@ class SimpleABTesting extends Plugin
     {
         $this->experiments->uninstall();
         $this->logExperiment->uninstall();
+    }
+
+    public function registerReports(): array
+    {
+        return [
+            new GetExperimentReport(), // Register your custom report
+        ];
     }
 }

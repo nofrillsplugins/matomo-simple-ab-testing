@@ -15,8 +15,7 @@ use Piwik\Url;
 use Piwik\Plugins\SimpleABTesting\API;
 use Piwik\Plugins\SimpleABTesting\Helpers;
 use Piwik\Request;
-use Piwik\View;
-use Piwik\Db;
+use Piwik\ViewDataTable\Factory;
 
 class Controller extends \Piwik\Plugin\Controller
 {
@@ -90,24 +89,23 @@ class Controller extends \Piwik\Plugin\Controller
         }
     }
 
-    public function getExperimentReport()
+    public function getExperimentReport($fetch = false)
     {
-        $view = new View('@SimpleABTesting/experiment_report');
-        $sql = "
-            SELECT
-                idvisit,
-                sabt_experiment_name AS Experiment,
-                sabt_is_variant AS IsVariant,
-                sabt_count AS NbVisits
-            FROM matomo_log_visit
-            WHERE sabt_experiment_name IS NOT NULL
-            GROUP BY idvisit, sabt_experiment_name, sabt_is_variant
-        ";
+        Piwik::checkUserHasSomeViewAccess();
+        // Build the ViewDataTable object
+        $view = Factory::build('table', 'SimpleABTesting.getExperimentData');
+        //$this->setPeriodVariablesView($view);
+        $view->config->columns_to_display = ['label', 'nb_visits', 'nb_unique_visitors'];
+        $view->config->addTranslation('label', Piwik::translate('SimpleABTesting_ExperimentName'));
+        $view->config->addTranslation('nb_visits', Piwik::translate('SimpleABTesting_NbVisits'));
+        $view->config->addTranslation('nb_unique_visitors', Piwik::translate('SimpleABTesting_NbUniqueVisitors'));
 
-        $data = Db::fetchAll($sql);
-        $view->title = 'Experiment Report';
-        $view->data = $data;
+        // Configure sorting options
+        $view->requestConfig->filter_sort_column = 'nb_visits';
+        $view->requestConfig->filter_sort_order = 'desc';
 
+        // Render the report and return the view (fetched if required)
         return $view->render();
     }
+
 }

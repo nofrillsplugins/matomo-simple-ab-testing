@@ -46,34 +46,34 @@ class IsExperiment extends Dimension
      * @param Action|null $action
      * @return mixed|false
      */
-    public function onNewVisit(Request $request, Visitor $visitor, $action)
-    {
-        $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
-        if (isset($paramValue)) {
-            return $paramValue;
-        }
-        return 0;
-    }
+    // public function onNewVisit(Request $request, Visitor $visitor, $action)
+    // {
+    //     $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
+    //     if (isset($paramValue)) {
+    //         return $paramValue;
+    //     }
+    //     return 0;
+    // }
 
-    /**
-     * The onExistingVisit method is triggered when a visitor was recognized meaning it is not a new visitor.
-     * If you want you can overwrite any previous value set by the event onNewVisit. By returning boolean false no value
-     * will be updated. If you do not want to perform any action on a new visit you can just remove this method.
-     *
-     * @param Request $request
-     * @param Visitor $visitor
-     * @param Action|null $action
-     *
-     * @return mixed|false
-     */
-    public function onExistingVisit(Request $request, Visitor $visitor, $action)
-    {
-        $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
-        if (isset($paramValue)) {
-            return $paramValue;
-        }
-        return 0;
-    }
+    // /**
+    //  * The onExistingVisit method is triggered when a visitor was recognized meaning it is not a new visitor.
+    //  * If you want you can overwrite any previous value set by the event onNewVisit. By returning boolean false no value
+    //  * will be updated. If you do not want to perform any action on a new visit you can just remove this method.
+    //  *
+    //  * @param Request $request
+    //  * @param Visitor $visitor
+    //  * @param Action|null $action
+    //  *
+    //  * @return mixed|false
+    //  */
+    // public function onExistingVisit(Request $request, Visitor $visitor, $action)
+    // {
+    //     $paramValue = Common::getRequestVar('sabt', '', 'string', $request->getParams());
+    //     if (isset($paramValue)) {
+    //         return $paramValue;
+    //     }
+    //     return 0;
+    // }
 
     /**
      * This event is executed shortly after "onNewVisit" or "onExistingVisit" in case the visitor converted a goal.
