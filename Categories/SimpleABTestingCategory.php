@@ -15,5 +15,5 @@ class SimpleABTestingCategory extends Category
 {
     protected $id = 'SimpleABTesting_SimpleABTesting';
     protected $order = 99;
-    protected $icon = 'abtestingicon-lab';
+    protected $icon = 'simpleabtestingicon-fire';
 }
