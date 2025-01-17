@@ -9,6 +9,19 @@ use Exception;
 
 class SimpleABTesting extends \Piwik\Plugin
 {
+
+    public function registerEvents()
+    {
+        return [
+            'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
+        ];
+    }
+
+    public function getStylesheetFiles(&$stylesheets)
+    {
+        $stylesheets[] = "plugins/SimpleABTesting/assets/fonts/style.css";
+    }
+
     public function install()
     {
         try {

@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'fire';
+  src:  url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.eot?d2ncll');
+  src:  url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.eot?d2ncll#iefix') format('embedded-opentype'),
+    url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.ttf?d2ncll') format('truetype'),
+    url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.woff?d2ncll') format('woff'),
+    url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.woff2?d2ncll') format('woff2'),
+    url('plugins/SimpleABTesting/assets/fonts/fonts/icomoon.svg?d2ncll#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="simpleabtestingicon-"], [class*=" simpleabtestingicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'fire' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.simpleabtestingicon-fire:before {
+  content: "\f06d";
+}

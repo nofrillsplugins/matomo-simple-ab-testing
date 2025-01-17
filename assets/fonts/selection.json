@@ -1,0 +1,56 @@
+{
+  "IcoMoonType": "selection",
+  "icons": [
+    {
+      "icon": {
+        "paths": [
+          "M804.571 969.143v36.571c0 9.714-8.571 18.286-18.286 18.286h-768c-9.714 0-18.286-8.571-18.286-18.286v-36.571c0-9.714 8.571-18.286 18.286-18.286h768c9.714 0 18.286 8.571 18.286 18.286zM658.286 365.714c0 218.857-256 238.286-256 384 0 40 20 93.143 38.286 128l-2.286-0.571 0.571 0.571c-157.714-72.571-292.571-172.571-292.571-365.714 0-218.857 256-238.286 256-384 0-40-20-93.143-37.714-128l1.714 0.571-0.571-0.571c157.714 72.571 292.571 172.571 292.571 365.714z"
+        ],
+        "width": 804.5714285714286,
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": ["fire"],
+        "defaultCode": 61549,
+        "grid": 14
+      },
+      "attrs": [],
+      "properties": {
+        "name": "fire",
+        "id": 104,
+        "order": 3,
+        "prevSize": 28,
+        "code": 61549
+      },
+      "setIdx": 1,
+      "setId": 3,
+      "iconIdx": 104
+    }
+  ],
+  "height": 1024,
+  "metadata": { "name": "simpleabtesting" },
+  "preferences": {
+    "showGlyphs": true,
+    "showQuickUse": true,
+    "showQuickUse2": true,
+    "showSVGs": true,
+    "fontPref": {
+      "prefix": "simpleabtestingicon-",
+      "metadata": { "fontFamily": "simpleabtesting" },
+      "metrics": { "emSize": 1024, "baseline": 6.25, "whitespace": 50 },
+      "embed": false
+    },
+    "imagePref": {
+      "prefix": "icon-",
+      "png": true,
+      "useClassSelector": true,
+      "color": 0,
+      "bgColor": 16777215,
+      "classSelector": ".icon",
+      "name": "icomoon"
+    },
+    "historySize": 50,
+    "showCodes": true,
+    "gridSize": 16
+  }
+}
